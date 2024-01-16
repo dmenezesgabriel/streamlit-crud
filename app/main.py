@@ -71,7 +71,11 @@ def main():
             books_data["Title"].append(book.title)
             books_data["Author"].append(book.author)
 
+
         st.dataframe(books_data)
+
+        # st.data_editor(books_data,key="data_editor", num_rows="dynamic")
+        # st.write(st.session_state["data_editor"])
 
     # Close the database session
     db.close()
