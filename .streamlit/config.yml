@@ -1,0 +1,10 @@
+[server]
+runOnSave = true
+
+[browser]
+gatherUsageStats = false
+
+[logger]
+level = "info"
+messageFormat = "%(asctime)s %(levelname)s %(filename)s:%(lineno)d:%(funcName)s %(message)s"
+
