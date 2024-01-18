@@ -1,5 +1,6 @@
-from sqlalchemy.orm import Session
 from repositories import BookRepository
+from sqlalchemy.orm import Session
+
 
 class BookService:
     def __init__(self, db: Session):

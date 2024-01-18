@@ -4,11 +4,13 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 
+
 class Book(Base):
-    __tablename__ = 'books'
+    __tablename__ = "books"
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     author = Column(String)
+
 
 # Create SQLite database engine
 DATABASE_URL = "sqlite:///./books.db"
