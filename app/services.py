@@ -2,7 +2,7 @@ from typing import List
 
 from entities.author import Author as AuthorEntity
 from entities.book import Book as BookEntity
-from repositories import AuthorRepository, BookRepository
+from repositories.books import AuthorRepository, BookRepository
 from sqlalchemy.orm import Session
 
 
