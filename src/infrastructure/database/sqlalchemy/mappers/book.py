@@ -1,6 +1,6 @@
 from domain.entities.book import Book as BookEntity
-from models.book import Book as BookModel
-from src.infrastructure.database.mappers.author import AuthorMapper
+from infrastructure.database.sqlalchemy.mappers.author import AuthorMapper
+from infrastructure.database.sqlalchemy.models.book import Book as BookModel
 
 
 class BookMapper:

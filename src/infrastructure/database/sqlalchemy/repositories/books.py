@@ -5,10 +5,12 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from domain.entities.author import Author as AuthorEntity
 from domain.entities.book import Book as BookEntity
-from infrastructure.database.mappers.author_mapper import AuthorMapper
-from infrastructure.database.mappers.book_mapper import BookMapper
-from models.author import Author as AuthorModel
-from models.book import Book
+from infrastructure.database.sqlalchemy.mappers.author import AuthorMapper
+from infrastructure.database.sqlalchemy.mappers.book import BookMapper
+from infrastructure.database.sqlalchemy.models.author import (
+    Author as AuthorModel,
+)
+from infrastructure.database.sqlalchemy.models.book import Book
 
 
 class AuthorRepository:

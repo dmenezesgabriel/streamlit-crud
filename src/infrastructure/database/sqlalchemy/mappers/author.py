@@ -1,5 +1,7 @@
 from domain.entities.author import Author as AuthorEntity
-from models.author import Author as AuthorModel
+from infrastructure.database.sqlalchemy.models.author import (
+    Author as AuthorModel,
+)
 
 
 class AuthorMapper:

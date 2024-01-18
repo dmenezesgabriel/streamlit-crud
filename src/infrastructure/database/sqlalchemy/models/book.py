@@ -1,8 +1,9 @@
 import uuid
 
-from db import Base
 from sqlalchemy import Column, ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import relationship
+
+from infrastructure.database.sqlalchemy.db import Base
 
 
 def generate_uuid():

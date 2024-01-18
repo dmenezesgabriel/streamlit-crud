@@ -3,7 +3,10 @@ from typing import List
 from sqlalchemy.orm import Session
 
 from domain.entities.book import Book as BookEntity
-from repositories.books import AuthorRepository, BookRepository
+from infrastructure.database.sqlalchemy.repositories.books import (
+    AuthorRepository,
+    BookRepository,
+)
 
 
 class BookService:
