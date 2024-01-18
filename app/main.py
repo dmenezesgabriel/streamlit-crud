@@ -26,7 +26,8 @@ def main():
                     try:
                         book = book_service.create_book(title, author_name)
                         st.success(
-                            f"Book '{book.title}' by {book.author.name} created!"
+                            f"Book '{book.title}' by {book.author.name} "
+                            "created!"
                         )
                     except IntegrityError as e:
                         st.error(f"Error: {str(e)}")
