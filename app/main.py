@@ -1,15 +1,11 @@
-# app/main.py
 import streamlit as st
 from models import SessionLocal
 from services import BookService
 
-# Initialize Streamlit app
 st.title("Books CRUD App")
 
-# Create a database session
 db = SessionLocal()
 
-# Initialize the BookService
 book_service = BookService(db)
 
 
@@ -21,14 +17,14 @@ def main():
     # Display form based on the selected operation
     if selected_operation == "Create":
         with st.container(border=True):
-            st.header("create_book_form")
+            st.header("Create Book Form")
             with st.form("create_form", border=False):
                 title = st.text_input("Title:")
-                author = st.text_input("Author:")
+                author_name = st.text_input("Author:")
                 if st.form_submit_button("Create"):
-                    book = book_service.create_book(title, author)
+                    book = book_service.create_book(title, author_name)
                     st.success(
-                        f"Book '{book.title}' by {book.author} created!"
+                        f"Book '{book.title}' by {book.author.name} created!"
                     )
 
     elif selected_operation == "Update":
@@ -53,11 +49,13 @@ def main():
                     title = st.text_input(
                         "New Title:", value=selected_book.title
                     )
-                    author = st.text_input(
-                        "New Author:", value=selected_book.author
+                    author_name = st.text_input(
+                        "New Author:", value=selected_book.author.name
                     )
                     if st.form_submit_button("Update"):
-                        book = book_service.update_book(book_id, title, author)
+                        book = book_service.update_book(
+                            book_id, title, author_name
+                        )
                         if book:
                             st.success(f"Book with ID {book.id} updated!")
 
@@ -92,10 +90,9 @@ def main():
         for book in books:
             books_data["ID"].append(book.id)
             books_data["Title"].append(book.title)
-            books_data["Author"].append(book.author)
+            books_data["Author"].append(book.author.name)
 
         st.dataframe(books_data)
-
         # st.data_editor(books_data,key="data_editor", num_rows="dynamic")
         # st.write(st.session_state["data_editor"])
 
