@@ -49,7 +49,7 @@ def main():
             # Display form fields if a book is selected
             if book_id_to_update:
                 with st.form("update_book_form", border=False):
-                    book_id = int(book_id_to_update.split(":")[0])
+                    book_id = book_id_to_update.split(":")[0].strip()
                     selected_book = book_service.get_book(book_id)
                     title = st.text_input(
                         "New Title:", value=selected_book.title
@@ -81,7 +81,7 @@ def main():
             # Display delete button if a book is selected
             if book_id_to_delete:
                 with st.form("delete_book_form", border=False):
-                    book_id = int(book_id_to_delete.split(":")[0])
+                    book_id = book_id_to_delete.split(":")[0].strip()
                     if st.form_submit_button("Delete"):
                         book = book_service.delete_book(book_id)
                         if book:
