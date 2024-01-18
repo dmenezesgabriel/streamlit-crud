@@ -1,5 +1,5 @@
 from entities import Author as AuthorEntity
-from models import Author
+from models.author import Author as AuthorModel
 
 
 class AuthorMapper:
@@ -9,4 +9,4 @@ class AuthorMapper:
 
     @staticmethod
     def entity_to_model(author_entity):
-        return Author(id=author_entity.id, name=author_entity.name)
+        return AuthorModel(id=author_entity.id, name=author_entity.name)

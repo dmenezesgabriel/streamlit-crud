@@ -1,10 +1,36 @@
 from typing import List
 
+from entities import Author as AuthorEntity
 from entities import Book as BookEntity
+from mappers.author_mapper import AuthorMapper
 from mappers.book_mapper import BookMapper
-from models import Author, Book
+from models.author import Author as AuthorModel
+from models.book import Book
 from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import NoResultFound
+
+
+class AuthorRepository:
+    def __init__(self, db: Session):
+        self.db = db
+
+    def get_author_by_name(self, name: str) -> AuthorEntity:
+        author = self.db.query(AuthorModel).filter_by(name=name).first()
+        if author:
+            return AuthorMapper.model_to_entity(author)
+        else:
+            return None
+
+    def create_author(self, name: str) -> AuthorEntity:
+        try:
+            author = AuthorModel(name=name)
+            self.db.add(author)
+            self.db.commit()
+            self.db.refresh(author)
+            return AuthorMapper.model_to_entity(author)
+        except Exception as error:
+            self.db.rollback()
+            raise error
 
 
 class BookRepository:
@@ -15,7 +41,7 @@ class BookRepository:
         try:
             # Check if the author already exists
             existing_author = (
-                self.db.query(Author).filter_by(name=author_name).first()
+                self.db.query(AuthorModel).filter_by(name=author_name).first()
             )
 
             if existing_author:
@@ -23,7 +49,7 @@ class BookRepository:
                 author = existing_author
             else:
                 # Create a new author
-                author = Author(name=author_name)
+                author = AuthorModel(name=author_name)
                 self.db.add(author)
 
             book = Book(title=title, author=author)
@@ -52,7 +78,7 @@ class BookRepository:
             book.title = title
             # Check if the author already exists
             existing_author = (
-                self.db.query(Author).filter_by(name=author_name).first()
+                self.db.query(AuthorModel).filter_by(name=author_name).first()
             )
 
             if existing_author:
@@ -60,7 +86,7 @@ class BookRepository:
                 book.author = existing_author
             else:
                 # Create a new author and assign to the book
-                new_author = Author(name=author_name)
+                new_author = AuthorModel(name=author_name)
                 self.db.add(new_author)
                 book.author = new_author
 

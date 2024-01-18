@@ -1,13 +1,26 @@
 from typing import List
 
+from entities import Author as AuthorEntity
 from entities import Book as BookEntity
-from repositories import BookRepository
+from repositories import AuthorRepository, BookRepository
 from sqlalchemy.orm import Session
+
+
+class AuthorService:
+    def __init__(self, db: Session):
+        self.author_repo = AuthorRepository(db)
+
+    def get_author_by_name(self, name: str) -> AuthorEntity:
+        return self.author_repo.get_author_by_name(name)
+
+    def create_author(self, name: str) -> AuthorEntity:
+        return self.author_repo.create_author(name)
 
 
 class BookService:
     def __init__(self, db: Session):
         self.book_repo = BookRepository(db)
+        self.author_repo = AuthorRepository(db)
 
     def create_book(self, title: str, author: str) -> BookEntity:
         return self.book_repo.create_book(title, author)

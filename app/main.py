@@ -1,5 +1,5 @@
 import streamlit as st
-from models import SessionLocal
+from db import SessionLocal
 from services import BookService
 from sqlalchemy.exc import IntegrityError
 

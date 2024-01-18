@@ -1,6 +1,6 @@
 from entities import Book as BookEntity
 from mappers.author_mapper import AuthorMapper
-from models import Book
+from models.book import Book as BookModel
 
 
 class BookMapper:
@@ -14,6 +14,6 @@ class BookMapper:
     @staticmethod
     def entity_to_model(book_entity):
         author_model = AuthorMapper.entity_to_model(book_entity.author)
-        return Book(
+        return BookModel(
             id=book_entity.id, title=book_entity.title, author=author_model
         )
