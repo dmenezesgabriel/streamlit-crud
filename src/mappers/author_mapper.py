@@ -1,4 +1,4 @@
-from entities.author import Author as AuthorEntity
+from domain.entities.author import Author as AuthorEntity
 from models.author import Author as AuthorModel
 
 

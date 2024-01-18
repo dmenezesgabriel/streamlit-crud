@@ -1,13 +1,14 @@
 from typing import List
 
-from entities.author import Author as AuthorEntity
-from entities.book import Book as BookEntity
+from sqlalchemy.orm import Session
+from sqlalchemy.orm.exc import NoResultFound
+
+from domain.entities.author import Author as AuthorEntity
+from domain.entities.book import Book as BookEntity
 from mappers.author_mapper import AuthorMapper
 from mappers.book_mapper import BookMapper
 from models.author import Author as AuthorModel
 from models.book import Book
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.exc import NoResultFound
 
 
 class AuthorRepository:

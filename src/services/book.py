@@ -1,8 +1,9 @@
 from typing import List
 
-from entities.book import Book as BookEntity
-from repositories.books import AuthorRepository, BookRepository
 from sqlalchemy.orm import Session
+
+from domain.entities.book import Book as BookEntity
+from repositories.books import AuthorRepository, BookRepository
 
 
 class BookService:
