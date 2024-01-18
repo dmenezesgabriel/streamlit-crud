@@ -7,13 +7,17 @@ class BookRepository:
         self.db = db
 
     def create_book(self, title: str, author_name: str):
-        author = Author(name=author_name)
-        book = Book(title=title, author=author)
-        self.db.add(author)
-        self.db.add(book)
-        self.db.commit()
-        self.db.refresh(book)
-        return book
+        try:
+            author = Author(name=author_name)
+            book = Book(title=title, author=author)
+            self.db.add(author)
+            self.db.add(book)
+            self.db.commit()
+            self.db.refresh(book)
+            return book
+        except Exception as error:
+            self.db.rollback()
+            raise error
 
     def get_books(self):
         return self.db.query(Book).all()

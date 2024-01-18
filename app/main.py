@@ -1,6 +1,7 @@
 import streamlit as st
 from models import SessionLocal
 from services import BookService
+from sqlalchemy.exc import IntegrityError
 
 st.title("Books CRUD App")
 
@@ -22,10 +23,13 @@ def main():
                 title = st.text_input("Title:")
                 author_name = st.text_input("Author:")
                 if st.form_submit_button("Create"):
-                    book = book_service.create_book(title, author_name)
-                    st.success(
-                        f"Book '{book.title}' by {book.author.name} created!"
-                    )
+                    try:
+                        book = book_service.create_book(title, author_name)
+                        st.success(
+                            f"Book '{book.title}' by {book.author.name} created!"
+                        )
+                    except IntegrityError as e:
+                        st.error(f"Error: {str(e)}")
 
     elif selected_operation == "Update":
         with st.container(border=True):
