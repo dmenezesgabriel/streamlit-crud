@@ -1,7 +1,7 @@
 from typing import List
 
-from entities import Author as AuthorEntity
-from entities import Book as BookEntity
+from entities.author import Author as AuthorEntity
+from entities.book import Book as BookEntity
 from mappers.author_mapper import AuthorMapper
 from mappers.book_mapper import BookMapper
 from models.author import Author as AuthorModel

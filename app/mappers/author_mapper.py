@@ -1,4 +1,4 @@
-from entities import Author as AuthorEntity
+from entities.author import Author as AuthorEntity
 from models.author import Author as AuthorModel
 
 
