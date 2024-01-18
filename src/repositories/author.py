@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from domain.entities.author import Author as AuthorEntity
-from mappers.author_mapper import AuthorMapper
+from infrastructure.database.mappers.author_mapper import AuthorMapper
 from models.author import Author as AuthorModel
 
 

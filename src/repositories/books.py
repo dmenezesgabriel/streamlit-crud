@@ -5,8 +5,8 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from domain.entities.author import Author as AuthorEntity
 from domain.entities.book import Book as BookEntity
-from mappers.author_mapper import AuthorMapper
-from mappers.book_mapper import BookMapper
+from infrastructure.database.mappers.author_mapper import AuthorMapper
+from infrastructure.database.mappers.book_mapper import BookMapper
 from models.author import Author as AuthorModel
 from models.book import Book
 
