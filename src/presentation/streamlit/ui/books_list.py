@@ -6,6 +6,7 @@ from presentation.streamlit.utils.dataframe import (
     get_dataframe_rows_cells_updated,
     get_dataframe_rows_removed,
 )
+from utils.identifiers import generate_uuid
 
 
 class BooksList:
@@ -25,15 +26,16 @@ class BooksList:
             # st.dataframe(books_data)
 
             books_df = pd.DataFrame(books_data)
-
-            edited_dataframe = st.data_editor(
-                books_df,
-                column_config={
-                    "ID": st.column_config.TextColumn(disabled=True)
-                },
-                key="data_editor",
-                num_rows="dynamic",
-            )
+            with st.form("dataframe_form"):
+                edited_dataframe = st.data_editor(
+                    books_df,
+                    column_config={
+                        "ID": st.column_config.TextColumn(disabled=True),
+                    },
+                    key="data_editor",
+                    # num_rows="dynamic",
+                )
+                st.form_submit_button("Save", type="primary")
 
             # Identify rows where any cell has changed
             updated_rows = get_dataframe_rows_cells_updated(
