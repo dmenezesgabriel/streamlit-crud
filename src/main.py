@@ -1,6 +1,12 @@
 import streamlit as st
 
 from application.services.book import BookService
+from infrastructure.database.sqlalchemy.repositories.author import (
+    AuthorRepository,
+)
+from infrastructure.database.sqlalchemy.repositories.books import (
+    BookRepository,
+)
 from presentation.streamlit.ui.books_list import BooksList
 from presentation.streamlit.ui.create_book_form import CreateBookForm
 from presentation.streamlit.ui.delete_book_form import DeleteBookForm
@@ -8,8 +14,9 @@ from presentation.streamlit.ui.update_book_form import UpdateBookForm
 
 st.title("Books CRUD App")
 
-
-book_service = BookService()
+author_repository = AuthorRepository()
+book_repository = BookRepository()
+book_service = BookService(book_repository, author_repository)
 
 selected_operation = st.selectbox(
     "Select Operation",

@@ -1,18 +1,12 @@
 from typing import List
 
 from domain.entities.book import Book as BookEntity
-from infrastructure.database.sqlalchemy.repositories.author import (
-    AuthorRepository,
-)
-from infrastructure.database.sqlalchemy.repositories.books import (
-    BookRepository,
-)
 
 
 class BookService:
-    def __init__(self):
-        self.book_repository = BookRepository()
-        self.author_repository = AuthorRepository()
+    def __init__(self, book_repository, author_repository):
+        self.book_repository = book_repository
+        self.author_repository = author_repository
 
     def create_book(self, title: str, author_name: str) -> BookEntity:
         existing_author = self.author_repository.get_author_by_name(
