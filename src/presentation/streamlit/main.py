@@ -2,6 +2,7 @@ import streamlit as st
 
 from application.services.book import BookService
 from infrastructure.database.sqlalchemy.orm import SessionLocal
+from presentation.streamlit.ui.books_list import BooksList
 from presentation.streamlit.ui.create_book_form import CreateBookForm
 from presentation.streamlit.ui.delete_book_form import DeleteBookForm
 from presentation.streamlit.ui.update_book_form import UpdateBookForm
@@ -32,18 +33,11 @@ def main():
         delete_book_form.execute()
 
     # Display table with all books
-    st.header("List of Books")
-    books = book_service.get_books()
-    if books:
-        books_data = {"ID": [], "Title": [], "Author": []}
-        for book in books:
-            books_data["ID"].append(book.id)
-            books_data["Title"].append(book.title)
-            books_data["Author"].append(book.author.name)
+    books_list = BooksList(book_service)
+    books_list.execute()
 
-        st.dataframe(books_data)
-        # st.data_editor(books_data,key="data_editor", num_rows="dynamic")
-        # st.write(st.session_state["data_editor"])
+    # st.data_editor(books_data,key="data_editor", num_rows="dynamic")
+    # st.write(st.session_state["data_editor"])
 
     # Close the database session
     db.close()
