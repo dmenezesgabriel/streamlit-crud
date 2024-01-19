@@ -1,8 +1,10 @@
 import streamlit as st
-from sqlalchemy.exc import IntegrityError
 
 from application.services.book import BookService
 from infrastructure.database.sqlalchemy.orm import SessionLocal
+from presentation.streamlit.ui.create_book_form import CreateBookForm
+from presentation.streamlit.ui.delete_book_form import DeleteBookForm
+from presentation.streamlit.ui.update_book_form import UpdateBookForm
 
 st.title("Books CRUD App")
 
@@ -18,75 +20,16 @@ def main():
 
     # Display form based on the selected operation
     if selected_operation == "Create":
-        with st.container(border=True):
-            st.header("Create Book Form")
-            with st.form("create_form", border=False):
-                title = st.text_input("Title:")
-                author_name = st.text_input("Author:")
-                if st.form_submit_button("Create"):
-                    try:
-                        book = book_service.create_book(title, author_name)
-                        st.success(
-                            f"Book '{book.title}' by {book.author.name} "
-                            "created!"
-                        )
-                    except IntegrityError as e:
-                        st.error(f"Error: {str(e)}")
+        create_book_form = CreateBookForm(book_service)
+        create_book_form.execute()
 
     elif selected_operation == "Update":
-        with st.container(border=True):
-            st.header("Update Book")
-
-            # Selectbox to choose book for updating
-            book_id_to_update = st.selectbox(
-                "Select Book to Update",
-                [""]
-                + [
-                    f"{book.id}: {book.title}"
-                    for book in book_service.get_books()
-                ],
-            )
-
-            # Display form fields if a book is selected
-            if book_id_to_update:
-                with st.form("update_book_form", border=False):
-                    book_id = book_id_to_update.split(":")[0].strip()
-                    selected_book = book_service.get_book(book_id)
-                    title = st.text_input(
-                        "New Title:", value=selected_book.title
-                    )
-                    author_name = st.text_input(
-                        "New Author:", value=selected_book.author.name
-                    )
-                    if st.form_submit_button("Update"):
-                        book = book_service.update_book(
-                            book_id, title, author_name
-                        )
-                        if book:
-                            st.success(f"Book with ID {book.id} updated!")
+        update_book_form = UpdateBookForm(book_service)
+        update_book_form.execute()
 
     elif selected_operation == "Delete":
-        with st.container(border=True):
-            st.header("Delete Book")
-
-            # Selectbox to choose book for deletion
-            book_id_to_delete = st.selectbox(
-                "Select Book to Delete",
-                [""]
-                + [
-                    f"{book.id}: {book.title}"
-                    for book in book_service.get_books()
-                ],
-            )
-
-            # Display delete button if a book is selected
-            if book_id_to_delete:
-                with st.form("delete_book_form", border=False):
-                    book_id = book_id_to_delete.split(":")[0].strip()
-                    if st.form_submit_button("Delete"):
-                        book = book_service.delete_book(book_id)
-                        if book:
-                            st.success(f"Book with ID {book.id} deleted!")
+        delete_book_form = DeleteBookForm(book_service)
+        delete_book_form.execute()
 
     # Display table with all books
     st.header("List of Books")
