@@ -3,7 +3,7 @@ import uuid
 from sqlalchemy import Column, ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import relationship
 
-from infrastructure.database.sqlalchemy.db import Base
+from src.infrastructure.database.sqlalchemy.orm import Base
 
 
 def generate_uuid():
