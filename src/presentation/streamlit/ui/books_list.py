@@ -2,9 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from presentation.streamlit.utils.dataframe import (
-    get_dataframe_rows_added,
     get_dataframe_rows_cells_updated,
-    get_dataframe_rows_deleted,
 )
 
 
