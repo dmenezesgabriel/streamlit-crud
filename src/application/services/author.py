@@ -8,10 +8,10 @@ from infrastructure.database.sqlalchemy.repositories.books import (
 
 class AuthorService:
     def __init__(self, db: Session):
-        self.author_repo = AuthorRepository(db)
+        self.author_repository = AuthorRepository(db)
 
     def get_author_by_name(self, name: str) -> AuthorEntity:
-        return self.author_repo.get_author_by_name(name)
+        return self.author_repository.get_author_by_name(name)
 
     def create_author(self, name: str) -> AuthorEntity:
-        return self.author_repo.create_author(name)
+        return self.author_repository.create_author(name)
