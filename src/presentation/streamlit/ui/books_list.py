@@ -2,7 +2,9 @@ import pandas as pd
 import streamlit as st
 
 from presentation.streamlit.utils.dataframe import (
+    get_dataframe_rows_added,
     get_dataframe_rows_cells_updated,
+    get_dataframe_rows_removed,
 )
 
 
@@ -30,23 +32,24 @@ class BooksList:
                     "ID": st.column_config.TextColumn(disabled=True)
                 },
                 key="data_editor",
-                # num_rows="dynamic",
+                num_rows="dynamic",
             )
 
             # Identify rows where any cell has changed
             updated_rows = get_dataframe_rows_cells_updated(
-                books_df, edited_dataframe
+                books_df, edited_dataframe, "ID"
             )
-
-            # added_rows = get_dataframe_rows_added(books_df, edited_dataframe)
-            # deleted_rows = get_dataframe_rows_deleted(
-            #     books_df, edited_dataframe
-            # )
+            added_rows = get_dataframe_rows_added(
+                books_df, edited_dataframe, "ID"
+            )
+            deleted_rows = get_dataframe_rows_removed(
+                books_df, edited_dataframe, "ID"
+            )
 
             with st.expander("Changed Data"):
                 st.write("updated: ")
                 st.json(updated_rows.to_json(orient="records"))
-                # st.write("added: ")
-                # st.json(added_rows.to_json(orient="records"))
-                # st.write("removed: ")
-                # st.json(deleted_rows.to_json(orient="records"))
+                st.write("added: ")
+                st.json(added_rows.to_json(orient="records"))
+                st.write("removed: ")
+                st.json(deleted_rows.to_json(orient="records"))
