@@ -1,13 +1,8 @@
-import uuid
-
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 from infrastructure.database.sqlalchemy.orm import Base
-
-
-def generate_uuid():
-    return str(uuid.uuid4())
+from utils.identifiers import generate_uuid
 
 
 class Author(Base):
