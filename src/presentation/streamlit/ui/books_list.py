@@ -1,6 +1,12 @@
 import pandas as pd
 import streamlit as st
 
+from presentation.streamlit.utils.dataframe import (
+    get_dataframe_rows_added,
+    get_dataframe_rows_cells_updated,
+    get_dataframe_rows_deleted,
+)
+
 
 class BooksList:
     def __init__(self, book_service):
@@ -29,11 +35,20 @@ class BooksList:
                 # num_rows="dynamic",
             )
 
-            books_df = books_df.reset_index(drop=True)
-            edited_dataframe = edited_dataframe.reset_index(drop=True)
-
             # Identify rows where any cell has changed
-            changed_rows = books_df[(books_df != edited_dataframe).any(axis=1)]
+            updated_rows = get_dataframe_rows_cells_updated(
+                books_df, edited_dataframe
+            )
+
+            # added_rows = get_dataframe_rows_added(books_df, edited_dataframe)
+            # deleted_rows = get_dataframe_rows_deleted(
+            #     books_df, edited_dataframe
+            # )
 
             with st.expander("Changed Data"):
-                st.json(changed_rows.to_json(orient="records"))
+                st.write("updated: ")
+                st.json(updated_rows.to_json(orient="records"))
+                # st.write("added: ")
+                # st.json(added_rows.to_json(orient="records"))
+                # st.write("removed: ")
+                # st.json(deleted_rows.to_json(orient="records"))
