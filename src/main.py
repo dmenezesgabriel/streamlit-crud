@@ -1,7 +1,7 @@
 import streamlit as st
 from sqlalchemy.exc import IntegrityError
 
-from services.book import BookService
+from application.services.book import BookService
 from src.infrastructure.database.sqlalchemy.orm import SessionLocal
 
 st.title("Books CRUD App")
