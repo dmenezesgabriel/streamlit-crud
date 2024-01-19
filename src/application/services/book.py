@@ -1,7 +1,5 @@
 from typing import List
 
-from sqlalchemy.orm import Session
-
 from domain.entities.book import Book as BookEntity
 from infrastructure.database.sqlalchemy.repositories.author import (
     AuthorRepository,
@@ -12,9 +10,9 @@ from infrastructure.database.sqlalchemy.repositories.books import (
 
 
 class BookService:
-    def __init__(self, db: Session):
-        self.book_repository = BookRepository(db)
-        self.author_repository = AuthorRepository(db)
+    def __init__(self):
+        self.book_repository = BookRepository()
+        self.author_repository = AuthorRepository()
 
     def create_book(self, title: str, author_name: str) -> BookEntity:
         existing_author = self.author_repository.get_author_by_name(

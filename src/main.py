@@ -1,7 +1,6 @@
 import streamlit as st
 
 from application.services.book import BookService
-from infrastructure.database.sqlalchemy.orm import SessionLocal
 from presentation.streamlit.ui.books_list import BooksList
 from presentation.streamlit.ui.create_book_form import CreateBookForm
 from presentation.streamlit.ui.delete_book_form import DeleteBookForm
@@ -9,9 +8,8 @@ from presentation.streamlit.ui.update_book_form import UpdateBookForm
 
 st.title("Books CRUD App")
 
-db = SessionLocal()
 
-book_service = BookService(db)
+book_service = BookService()
 
 selected_operation = st.selectbox(
     "Select Operation",
@@ -36,6 +34,3 @@ elif selected_operation == "Delete":
 # Display table with all books
 books_list = BooksList(book_service)
 books_list.execute()
-
-# Close the database session
-db.close()

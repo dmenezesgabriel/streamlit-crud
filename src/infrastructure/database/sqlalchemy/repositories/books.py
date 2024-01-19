@@ -1,6 +1,5 @@
 from typing import List
 
-from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import NoResultFound
 
 from domain.entities.book import Book as BookEntity
@@ -9,47 +8,48 @@ from infrastructure.database.sqlalchemy.models.author import (
     Author as AuthorModel,
 )
 from infrastructure.database.sqlalchemy.models.book import Book
+from infrastructure.database.sqlalchemy.session_mixing import (
+    use_database_session,
+)
 
 
 class BookRepository:
-    def __init__(self, db: Session):
-        self.db = db
-
     def create_book(self, title: str, author: AuthorModel):
-        try:
+        with use_database_session() as db:
             book = Book(title=title, author=author)
-            self.db.add(book)
-            self.db.commit()
-            self.db.refresh(book)
+            db.add(book)
+            db.commit()
+            db.refresh(book)
             return BookMapper.model_to_entity(book)
-        except Exception as error:
-            self.db.rollback()
-            raise error
 
     def get_books(self) -> List[BookEntity]:
-        books = self.db.query(Book).all()
-        return [BookMapper.model_to_entity(book) for book in books]
+        with use_database_session() as db:
+            books = db.query(Book).all()
+            return [BookMapper.model_to_entity(book) for book in books]
 
     def get_book(self, book_id: int) -> BookEntity:
-        book = self.db.query(Book).filter_by(id=book_id).first()
-        if book:
-            return BookMapper.model_to_entity(book)
-        else:
-            raise NoResultFound("Book not found")
+        with use_database_session() as db:
+            book = db.query(Book).filter_by(id=book_id).first()
+            if book:
+                return BookMapper.model_to_entity(book)
+            else:
+                raise NoResultFound("Book not found")
 
     def update_book(self, book_id: int, title: str, author: AuthorModel):
-        book = self.db.query(Book).filter_by(id=book_id).first()
-        if book:
-            book.title = title
-            book.author = author
-            self.db.commit()
-            self.db.refresh(book)
-            return BookMapper.model_to_entity(book)
-        else:
-            raise NoResultFound("Book not found")
+        with use_database_session() as db:
+            book = db.query(Book).filter_by(id=book_id).first()
+            if book:
+                book.title = title
+                book.author = author
+                db.commit()
+                db.refresh(book)
+                return BookMapper.model_to_entity(book)
+            else:
+                raise NoResultFound("Book not found")
 
     def delete_book(self, book_id: int):
-        book = self.db.query(Book).filter_by(id=book_id).first()
-        if book:
-            self.db.delete(book)
-            self.db.commit()
+        with use_database_session() as db:
+            book = db.query(Book).filter_by(id=book_id).first()
+            if book:
+                db.delete(book)
+                db.commit()

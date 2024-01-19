@@ -1,5 +1,3 @@
-from sqlalchemy.orm import Session
-
 from domain.entities.author import Author as AuthorEntity
 from infrastructure.database.sqlalchemy.repositories.books import (
     AuthorRepository,
@@ -7,8 +5,8 @@ from infrastructure.database.sqlalchemy.repositories.books import (
 
 
 class AuthorService:
-    def __init__(self, db: Session):
-        self.author_repository = AuthorRepository(db)
+    def __init__(self):
+        self.author_repository = AuthorRepository()
 
     def get_author_by_name(self, name: str) -> AuthorEntity:
         return self.author_repository.get_author_by_name(name)
