@@ -17,6 +17,7 @@ class DeleteBookForm:
                     f"{book.id}: {book.title}"
                     for book in self.book_service.get_books()
                 ],
+                key="delete_books_select",
             )
 
             # Display delete button if a book is selected

@@ -17,6 +17,7 @@ class UpdateBookForm:
                     f"{book.id}: {book.title}"
                     for book in self.book_service.get_books()
                 ],
+                key="update_books_select",
             )
 
             # Display form fields if a book is selected

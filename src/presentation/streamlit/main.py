@@ -16,7 +16,9 @@ book_service = BookService(db)
 
 def main():
     selected_operation = st.selectbox(
-        "Select Operation", ["Create", "Update", "Delete"]
+        "Select Operation",
+        ["Create", "Update", "Delete"],
+        key="crud_operation_select",
     )
 
     # Display form based on the selected operation
@@ -35,9 +37,6 @@ def main():
     # Display table with all books
     books_list = BooksList(book_service)
     books_list.execute()
-
-    # st.data_editor(books_data,key="data_editor", num_rows="dynamic")
-    # st.write(st.session_state["data_editor"])
 
     # Close the database session
     db.close()

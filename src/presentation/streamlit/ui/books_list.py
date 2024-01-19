@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 
 
@@ -15,4 +16,24 @@ class BooksList:
                 books_data["Title"].append(book.title)
                 books_data["Author"].append(book.author.name)
 
-            st.dataframe(books_data)
+            # st.dataframe(books_data)
+
+            books_df = pd.DataFrame(books_data)
+
+            edited_dataframe = st.data_editor(
+                books_df,
+                column_config={
+                    "ID": st.column_config.TextColumn(disabled=True)
+                },
+                key="data_editor",
+                # num_rows="dynamic",
+            )
+
+            books_df = books_df.reset_index(drop=True)
+            edited_dataframe = edited_dataframe.reset_index(drop=True)
+
+            # Identify rows where any cell has changed
+            changed_rows = books_df[(books_df != edited_dataframe).any(axis=1)]
+
+            with st.expander("Changed Data"):
+                st.json(changed_rows.to_json(orient="records"))
