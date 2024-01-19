@@ -6,7 +6,6 @@ from presentation.streamlit.utils.dataframe import (
     get_dataframe_rows_cells_updated,
     get_dataframe_rows_removed,
 )
-from utils.identifiers import generate_uuid
 
 
 class BooksList:
