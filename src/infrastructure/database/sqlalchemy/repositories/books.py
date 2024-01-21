@@ -2,11 +2,9 @@ from typing import List
 
 from sqlalchemy.orm.exc import NoResultFound
 
+from domain.entities.author import Author as AuthorEntity
 from domain.entities.book import Book as BookEntity
 from infrastructure.database.sqlalchemy.mappers.book import BookMapper
-from infrastructure.database.sqlalchemy.models.author import (
-    Author as AuthorModel,
-)
 from infrastructure.database.sqlalchemy.models.book import Book as BookModel
 from infrastructure.database.sqlalchemy.session_mixing import (
     use_database_session,
@@ -14,9 +12,9 @@ from infrastructure.database.sqlalchemy.session_mixing import (
 
 
 class BookRepository:
-    def create_book(self, title: str, author: AuthorModel):
+    def create_book(self, title: str, author: AuthorEntity):
         with use_database_session() as db:
-            book = BookModel(title=title, author=author)
+            book = BookModel(title=title, author_id=author.id)
             db.add(book)
             db.commit()
             db.refresh(book)
@@ -35,12 +33,12 @@ class BookRepository:
             else:
                 raise NoResultFound("Book not found")
 
-    def update_book(self, book_id: int, title: str, author: AuthorModel):
+    def update_book(self, book_id: int, title: str, author: AuthorEntity):
         with use_database_session() as db:
             book = db.query(BookModel).filter_by(id=book_id).first()
             if book:
                 book.title = title
-                book.author = author
+                book.author_id = author.id
                 db.commit()
                 db.refresh(book)
                 return BookMapper.model_to_entity(book)
