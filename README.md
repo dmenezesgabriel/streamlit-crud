@@ -5,5 +5,6 @@
 1. `python -m venv venv`
 2. `source venv/Scripts/activate` or `source venv/bin/activate`
 3. `pip install -r requirements.txt`
-4. `python scripts/database.py`
-5. `streamlit run src/main.py`
+4. create a `.env` file as the `.env.template` example
+5. `python scripts/database.py`
+6. `streamlit run src/main.py`
