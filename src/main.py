@@ -1,5 +1,6 @@
 import streamlit as st
 
+import infrastructure.database.sqlalchemy.orm
 from application.services.book import BookService
 from infrastructure.database.sqlalchemy.repositories.author import (
     AuthorRepository,

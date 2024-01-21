@@ -9,8 +9,6 @@ Base = declarative_base()
 DATABASE_URL = "sqlite:///./books.db"
 engine = create_engine(DATABASE_URL)
 
-# Create tables
-Base.metadata.create_all(bind=engine)
 
 # Create a session to interact with the database
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
