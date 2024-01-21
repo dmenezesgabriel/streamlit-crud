@@ -7,9 +7,23 @@ from utils.identifiers import generate_uuid
 
 class Book(Base):
     __tablename__ = "books"
-    id = Column(String, primary_key=True, default=generate_uuid, index=True)
-    title = Column(String, index=True)
-    author_id = Column(String, ForeignKey("authors.id"))
+    id = Column(
+        String,
+        primary_key=True,
+        default=generate_uuid,
+        index=True,
+        nullable=False,
+    )
+    title = Column(
+        String,
+        index=True,
+        nullable=False,
+    )
+    author_id = Column(
+        String,
+        ForeignKey("authors.id"),
+        nullable=False,
+    )
     author = relationship("Author", back_populates="books")
 
     # Unique constraint on the combination of author and book title
