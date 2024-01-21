@@ -3,6 +3,7 @@
 - [ ] Tests
 - [ ] Update repositories to receive entities instead of property names, the entities should be instantiated at the service
 - [ ] Check text inputs to return "" when empty instead of None and create empty values in database
+- [ ] Add logging
 - [ ] Add events model/bus
 - [ ] Move services to use cases
 - [ ] Add repositories abstract classes
