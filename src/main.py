@@ -1,23 +1,20 @@
 import streamlit as st
 
-import infrastructure.database.sqlalchemy.orm
-from application.services.book import BookService
-from infrastructure.database.sqlalchemy.repositories.author import (
-    AuthorRepository,
-)
-from infrastructure.database.sqlalchemy.repositories.books import (
-    BookRepository,
-)
+from infrastructure.logger.logger import logger_instance
+from presentation.streamlit.singletons.services import get_book_service
 from presentation.streamlit.ui.books_list import BooksList
 from presentation.streamlit.ui.create_book_form import CreateBookForm
 from presentation.streamlit.ui.delete_book_form import DeleteBookForm
 from presentation.streamlit.ui.update_book_form import UpdateBookForm
 
+logger = logger_instance.get_logger()
+
+logger.info("runned main page")
+
 st.title("Books CRUD App")
 
-author_repository = AuthorRepository()
-book_repository = BookRepository()
-book_service = BookService(book_repository, author_repository)
+
+book_service = get_book_service()
 
 selected_operation = st.selectbox(
     "Select Operation",
