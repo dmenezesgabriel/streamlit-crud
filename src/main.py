@@ -1,13 +1,17 @@
+import logging
+
 import streamlit as st
 
-from infrastructure.logger.logger import logger_instance
+from presentation.streamlit.singletons.logger import init_logger
 from presentation.streamlit.singletons.services import get_book_service
 from presentation.streamlit.ui.create_book_form import create_book_form
 from presentation.streamlit.ui.delete_book_form import delete_book_form
 from presentation.streamlit.ui.list_books import list_books
 from presentation.streamlit.ui.update_book_form import update_book_form
 
-logger = logger_instance.get_logger()
+init_logger()
+
+logger = logging.getLogger("app")
 
 logger.info("runned main page")
 
