@@ -15,5 +15,7 @@ class BookMapper:
     def entity_to_model(book_entity):
         author_model = AuthorMapper.entity_to_model(book_entity.author)
         return BookModel(
-            id=book_entity.id, title=book_entity.title, author=author_model
+            id=book_entity.id,
+            title=book_entity.title,
+            author_id=author_model.id,
         )

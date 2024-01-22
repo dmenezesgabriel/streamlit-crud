@@ -18,7 +18,9 @@ class BookService:
         else:
             author = self.author_repository.create_author(author_name)
 
-        return self.book_repository.create_book(title, author)
+        book = BookEntity(title=title, author=author)
+
+        return self.book_repository.create_book(book)
 
     def get_books(self) -> List[BookEntity]:
         return self.book_repository.get_books()
@@ -37,7 +39,9 @@ class BookService:
             author = existing_author
         else:
             author = self.author_repository.create_author(author_name)
-        return self.book_repository.update_book(book_id, title, author)
+
+        book = BookEntity(id=book_id, title=title, author=author)
+        return self.book_repository.update_book(book)
 
     def delete_book(self, book_id: int) -> BookEntity:
         return self.book_repository.delete_book(book_id)
