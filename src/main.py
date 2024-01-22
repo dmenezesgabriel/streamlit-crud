@@ -2,10 +2,10 @@ import streamlit as st
 
 from infrastructure.logger.logger import logger_instance
 from presentation.streamlit.singletons.services import get_book_service
-from presentation.streamlit.ui.books_list import BooksList
-from presentation.streamlit.ui.create_book_form import CreateBookForm
-from presentation.streamlit.ui.delete_book_form import DeleteBookForm
-from presentation.streamlit.ui.update_book_form import UpdateBookForm
+from presentation.streamlit.ui.create_book_form import create_book_form
+from presentation.streamlit.ui.delete_book_form import delete_book_form
+from presentation.streamlit.ui.list_books import list_books
+from presentation.streamlit.ui.update_book_form import update_book_form
 
 logger = logger_instance.get_logger()
 
@@ -25,17 +25,11 @@ selected_operation = st.selectbox(
 
 # Display form based on the selected operation
 if selected_operation == "Create":
-    create_book_form = CreateBookForm(book_service)
-    create_book_form.execute()
-
+    create_book_form(book_service)
 elif selected_operation == "Update":
-    update_book_form = UpdateBookForm(book_service)
-    update_book_form.execute()
-
+    update_book_form(book_service)
 elif selected_operation == "Delete":
-    delete_book_form = DeleteBookForm(book_service)
-    delete_book_form.execute()
+    delete_book_form(book_service)
 
 # Display table with all books
-books_list = BooksList(book_service)
-books_list.execute()
+list_books(book_service)
