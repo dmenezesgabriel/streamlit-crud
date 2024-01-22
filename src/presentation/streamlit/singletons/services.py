@@ -1,7 +1,7 @@
 import streamlit as st
 
 from application.services.book import BookService
-from presentation.streamlit.singletons.repositories import (
+from presentation.streamlit.singletons.sqlalchemy.repositories import (
     get_author_repository,
     get_book_repository,
 )
