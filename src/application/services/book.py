@@ -1,5 +1,6 @@
 from typing import List
 
+from domain.entities.author import Author as AuthorEntity
 from domain.entities.book import Book as BookEntity
 
 
@@ -16,7 +17,8 @@ class BookService:
         if existing_author:
             author = existing_author
         else:
-            author = self.author_repository.create_author(author_name)
+            new_author = AuthorEntity(name=author_name)
+            author = self.author_repository.create_author(new_author)
 
         book = BookEntity(title=title, author=author)
 
@@ -38,7 +40,8 @@ class BookService:
         if existing_author:
             author = existing_author
         else:
-            author = self.author_repository.create_author(author_name)
+            new_author = AuthorEntity(name=author_name)
+            author = self.author_repository.create_author(new_author)
 
         book = BookEntity(id=book_id, title=title, author=author)
         return self.book_repository.update_book(book)

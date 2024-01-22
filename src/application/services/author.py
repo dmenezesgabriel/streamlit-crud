@@ -9,4 +9,5 @@ class AuthorService:
         return self.author_repository.get_author_by_name(name)
 
     def create_author(self, name: str) -> AuthorEntity:
-        return self.author_repository.create_author(name)
+        author = AuthorEntity(name=name)
+        return self.author_repository.create_author(author)

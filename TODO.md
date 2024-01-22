@@ -1,7 +1,6 @@
 # TODO
 
 - [ ] Tests
-- [ ] Update repositories to receive entities instead of property names, the entities should be instantiated at the service
 - [ ] Cache repository get methods
 - [ ] Check text inputs to return "" when empty instead of None and create empty values in database
 - [ ] Add events model/bus

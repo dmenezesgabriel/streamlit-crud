@@ -17,10 +17,10 @@ class AuthorRepository:
             else:
                 return None
 
-    def create_author(self, name: str) -> AuthorEntity:
+    def create_author(self, author) -> AuthorEntity:
         with use_database_session() as db:
-            author = AuthorModel(name=name)
-            db.add(author)
+            author_model = AuthorMapper.entity_to_model(author)
+            db.add(author_model)
             db.commit()
-            db.refresh(author)
-            return AuthorMapper.model_to_entity(author)
+            db.refresh(author_model)
+            return AuthorMapper.model_to_entity(author_model)
