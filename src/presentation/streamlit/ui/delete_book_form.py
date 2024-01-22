@@ -1,17 +1,24 @@
+import logging
+
 import streamlit as st
+
+logger = logging.getLogger("app")
+
+
+def _get_book_options(book_service):
+    return [f"{book.id}: {book.title}" for book in book_service.get_books()]
 
 
 def delete_book_form(book_service):
     with st.container(border=True):
         st.header("Delete Book")
 
+        books_options = _get_book_options(book_service)
+
         # Selectbox to choose book for deletion
         book_id_to_delete = st.selectbox(
             "Select Book to Delete",
-            [""]
-            + [
-                f"{book.id}: {book.title}" for book in book_service.get_books()
-            ],
+            [""] + books_options,
             key="delete_books_select",
         )
 
