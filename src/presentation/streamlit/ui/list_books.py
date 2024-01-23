@@ -8,9 +8,9 @@ from presentation.streamlit.utils.dataframe import (
 )
 
 
-def list_books(book_service):
+def list_books(get_books_list_cache):
     st.header("List of Books")
-    books = book_service.get_books()
+    books = get_books_list_cache()
     if books:
         books_data = {"ID": [], "Title": [], "Author": []}
         for book in books:

@@ -1,7 +1,7 @@
 import streamlit as st
 
 
-def update_book_form(book_service):
+def update_book_form(book_service, get_books_list_cache):
     with st.container(border=True):
         st.header("Update Book")
 
@@ -9,9 +9,7 @@ def update_book_form(book_service):
         book_id_to_update = st.selectbox(
             "Select Book to Update",
             [""]
-            + [
-                f"{book.id}: {book.title}" for book in book_service.get_books()
-            ],
+            + [f"{book.id}: {book.title}" for book in get_books_list_cache()],
             key="update_books_select",
         )
 
@@ -28,5 +26,6 @@ def update_book_form(book_service):
                     book = book_service.update_book(
                         book_id, title, author_name
                     )
+                    get_books_list_cache.clear()
                     if book:
                         st.success(f"Book with ID {book.id} updated!")

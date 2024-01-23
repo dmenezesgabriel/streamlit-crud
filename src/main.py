@@ -2,6 +2,7 @@ import logging
 
 import streamlit as st
 
+from presentation.streamlit.cache.services import get_books_list_cache
 from presentation.streamlit.singletons.logger import init_logger
 from presentation.streamlit.singletons.services import get_book_service
 from presentation.streamlit.ui.create_book_form import create_book_form
@@ -29,11 +30,11 @@ selected_operation = st.selectbox(
 
 # Display form based on the selected operation
 if selected_operation == "Create":
-    create_book_form(book_service)
+    create_book_form(book_service, get_books_list_cache)
 elif selected_operation == "Update":
-    update_book_form(book_service)
+    update_book_form(book_service, get_books_list_cache)
 elif selected_operation == "Delete":
-    delete_book_form(book_service)
+    delete_book_form(book_service, get_books_list_cache)
 
 # Display table with all books
-list_books(book_service)
+list_books(get_books_list_cache)
