@@ -6,6 +6,9 @@ from infrastructure.database.sqlalchemy.repositories.author import (
 from infrastructure.database.sqlalchemy.repositories.books import (
     BookRepository,
 )
+from infrastructure.database.sqlalchemy.repositories.event import (
+    EventRepository,
+)
 
 
 @st.cache_resource
@@ -16,3 +19,8 @@ def get_book_repository():
 @st.cache_resource
 def get_author_repository():
     return AuthorRepository()
+
+
+@st.cache_resource
+def get_event_repository():
+    return EventRepository()
