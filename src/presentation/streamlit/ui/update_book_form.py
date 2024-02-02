@@ -1,7 +1,11 @@
 import streamlit as st
 
+from controllers.book import BookController
+from presentation.streamlit.cache.use_cases import get_books_list_cache
+from presentation.streamlit.singletons.pubsub import get_event_publisher
 
-def update_book_form(book_service, get_books_list_cache):
+
+def update_book_form():
     with st.container(border=True):
         st.header("Update Book")
 
@@ -17,14 +21,18 @@ def update_book_form(book_service, get_books_list_cache):
         if book_id_to_update:
             with st.form("update_book_form", border=False):
                 book_id = book_id_to_update.split(":")[0].strip()
-                selected_book = book_service.get_book(book_id)
+                selected_book = BookController.get_book(book_id)
                 title = st.text_input("New Title:", value=selected_book.title)
                 author_name = st.text_input(
                     "New Author:", value=selected_book.author.name
                 )
                 if st.form_submit_button("Update"):
-                    book = book_service.update_book(
-                        book_id, title, author_name
+                    event_publisher = get_event_publisher()
+                    book = BookController.update_book(
+                        book_id=book_id,
+                        title=title,
+                        author_name=author_name,
+                        event_publisher=event_publisher,
                     )
                     get_books_list_cache.clear()
                     if book:

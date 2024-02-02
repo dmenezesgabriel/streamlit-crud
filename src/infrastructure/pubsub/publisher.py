@@ -1,4 +1,7 @@
-class EventPublisher:
+from application.interfaces.publisher import BaseEventPublisher
+
+
+class EventPublisher(BaseEventPublisher):
     def __init__(self):
         self.subscribers = {}
 
