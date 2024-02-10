@@ -2,11 +2,14 @@ import os
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 load_dotenv()
-Base = declarative_base()
+
+
+class Base(DeclarativeBase):
+    pass
+
 
 # Create SQLite database engine
 DATABASE_URI = os.getenv("DATABASE_URI")
