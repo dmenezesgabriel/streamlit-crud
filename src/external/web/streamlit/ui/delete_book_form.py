@@ -2,8 +2,10 @@ from typing import List
 
 import streamlit as st
 
-from communication.controllers.book import BookController
 from external.web.streamlit.cache.use_cases import get_books_list_cache
+from external.web.streamlit.singletons.book_controller import (
+    get_book_controller,
+)
 
 
 def _get_book_options() -> List[str]:
@@ -28,7 +30,8 @@ def delete_book_form() -> None:
             with st.form("delete_book_form", border=False):
                 book_id = book_id_to_delete.split(":")[0].strip()
                 if st.form_submit_button("Delete"):
-                    book = BookController.delete_book(
+                    book_controller = get_book_controller()
+                    book = book_controller.delete_book(
                         book_id=book_id,
                     )
                     get_books_list_cache.clear()

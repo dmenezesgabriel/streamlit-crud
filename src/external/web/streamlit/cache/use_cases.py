@@ -2,10 +2,13 @@ from typing import List
 
 import streamlit as st
 
-from communication.controllers.book import BookController
 from core.domain.entities.book import Book as BookEntity
+from external.web.streamlit.singletons.book_controller import (
+    get_book_controller,
+)
 
 
 @st.cache_resource
 def get_books_list_cache() -> List[BookEntity]:
-    return BookController.get_books()
+    book_controller = get_book_controller()
+    return book_controller.get_books()

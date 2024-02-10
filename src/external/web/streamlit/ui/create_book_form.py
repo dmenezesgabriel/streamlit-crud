@@ -1,7 +1,9 @@
 import streamlit as st
 
-from communication.controllers.book import BookController
 from external.web.streamlit.cache.use_cases import get_books_list_cache
+from external.web.streamlit.singletons.book_controller import (
+    get_book_controller,
+)
 
 
 def create_book_form() -> None:
@@ -11,8 +13,9 @@ def create_book_form() -> None:
             title = st.text_input("Title:")
             author_name = st.text_input("Author:")
             if st.form_submit_button("Create"):
+                book_controller = get_book_controller()
                 try:
-                    book = BookController.create_book(
+                    book = book_controller.create_book(
                         title=title,
                         author_name=author_name,
                     )

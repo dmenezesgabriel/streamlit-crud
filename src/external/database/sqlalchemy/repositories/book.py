@@ -2,13 +2,14 @@ from typing import List, Union
 
 from sqlalchemy.orm.exc import NoResultFound
 
+from common.interfaces.book_repository import BookRepositoryInterface
 from core.domain.entities.book import Book as BookEntity
 from external.database.sqlalchemy.mappers.book import BookMapper
 from external.database.sqlalchemy.models.book import Book as BookModel
 from external.database.sqlalchemy.session_mixing import use_database_session
 
 
-class BookRepository:
+class BookRepository(BookRepositoryInterface):
     def create_book(self, book: BookEntity) -> BookEntity:
         with use_database_session() as db:
             book_model = BookMapper.entity_to_model(book)

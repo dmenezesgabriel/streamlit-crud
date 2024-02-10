@@ -1,5 +1,6 @@
 from typing import List
 
+from common.interfaces.event_gateway import EventGatewayInterface
 from common.interfaces.event_repository import EventRepositoryInterface
 from core.domain.entities.event import Event as EventEntity
 from external.database.sqlalchemy.mappers.event import EventMapper
@@ -7,16 +8,12 @@ from external.database.sqlalchemy.models.event import Event as EventModel
 from external.database.sqlalchemy.session_mixing import use_database_session
 
 
-class EventRepository(EventRepositoryInterface):
+class EventGateway(EventGatewayInterface):
+    def __init__(self, event_repository: EventRepositoryInterface):
+        self.event_repository = event_repository
+
     def create_event(self, event: EventEntity) -> EventEntity:
-        with use_database_session() as db:
-            event_model = EventMapper.entity_to_model(event)
-            db.add(event_model)
-            db.commit()
-            db.refresh(event_model)
-            return EventMapper.model_to_entity(event_model)
+        return self.event_repository.create_event(event=event)
 
     def get_events(self) -> List[EventEntity]:
-        with use_database_session() as db:
-            events = db.query(EventModel).all()
-            return [EventMapper.model_to_entity(event) for event in events]
+        return self.event_repository.get_events()

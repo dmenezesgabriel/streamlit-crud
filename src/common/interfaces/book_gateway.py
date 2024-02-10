@@ -4,7 +4,7 @@ from typing import List, Union
 from core.domain.entities.book import Book as BookEntity
 
 
-class BookRepositoryInterface(ABC):
+class BookGatewayInterface(ABC):
     @abstractmethod
     def create_book(self, book: BookEntity) -> BookEntity:
         raise NotImplementedError

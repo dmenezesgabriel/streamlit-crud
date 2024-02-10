@@ -1,31 +1,32 @@
 from typing import Dict, List
 
+from communication.gateway.event import EventGateway
 from core.domain.entities.event import Event as EventEntity
 from core.use_cases.event import EventUseCase
-from external.database.sqlalchemy.repositories.event import EventRepository
 
 
 class EventController:
+    def __init__(self, event_repository: EventRepository):
+        self.event_repository = event_repository
 
-    @staticmethod
-    def get_events() -> List[EventEntity]:
-        event_repository = EventRepository()
-        return EventUseCase.get_events(event_repository=event_repository)
+    def get_events(self) -> List[EventEntity]:
+        event_gateway = EventGateway(self.event_repository)
+        return EventUseCase.get_events(event_gateway=event_gateway)
 
-    @staticmethod
     def create_event(
+        self,
         id: str,
         event_type: str,
         model_type: str,
         model_id: str,
         payload: Dict[str, str],
     ) -> EventEntity:
-        event_repository = EventRepository()
+        event_gateway = EventGateway(self.event_repository)
         return EventUseCase.create_event(
             id=id,
             event_type=event_type,
             model_type=model_type,
             model_id=model_id,
             payload=payload,
-            event_repository=event_repository,
+            event_gateway=event_gateway,
         )

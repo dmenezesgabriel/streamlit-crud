@@ -4,7 +4,7 @@ from typing import List
 from core.domain.entities.event import Event as EventEntity
 
 
-class EventRepositoryInterface(ABC):
+class EventGatewayInterface(ABC):
     @abstractmethod
     def create_event(self, event: EventEntity) -> EventEntity:
         raise NotImplementedError

@@ -1,55 +1,61 @@
 from typing import List
 
+from common.interfaces.author_repository import AuthorRepositoryInterface
+from common.interfaces.book_repository import BookRepositoryInterface
+from communication.gateway.author import AuthorGateway
+from communication.gateway.book import BookGateway
 from core.domain.entities.book import Book as BookEntity
 from core.use_cases.book import BookUseCases
-from external.database.sqlalchemy.repositories.author import AuthorRepository
-from external.database.sqlalchemy.repositories.books import BookRepository
 
 
 class BookController:
-    @staticmethod
-    def get_books() -> List[BookEntity]:
-        book_repository = BookRepository()
-        return BookUseCases.get_books(book_repository=book_repository)
+    def __init__(
+        self,
+        book_repository: BookRepositoryInterface,
+        author_repository: AuthorRepositoryInterface,
+    ):
+        self.book_repository = book_repository
+        self.author_repository = author_repository
 
-    @staticmethod
-    def get_book(book_id: str) -> BookEntity:
-        book_repository = BookRepository()
+    def get_books(self) -> List[BookEntity]:
+        book_gateway = BookGateway(self.book_repository)
+        return BookUseCases.get_books(book_gateway=book_gateway)
+
+    def get_book(self, book_id: str) -> BookEntity:
+        book_gateway = BookGateway(self.book_repository)
         return BookUseCases.get_book(
-            book_id=book_id, book_repository=book_repository
+            book_id=book_id, book_gateway=book_gateway
         )
 
-    @staticmethod
-    def create_book(title: str, author_name: str) -> BookEntity:
-        book_repository = BookRepository()
-        author_repository = AuthorRepository()
+    def create_book(self, title: str, author_name: str) -> BookEntity:
+        book_gateway = BookGateway(self.book_repository)
+        author_gateway = AuthorGateway(self.author_repository)
         return BookUseCases.create_book(
             title=title,
             author_name=author_name,
-            book_repository=book_repository,
-            author_repository=author_repository,
+            book_gateway=book_gateway,
+            author_gateway=author_gateway,
         )
 
-    @staticmethod
     def update_book(
+        self,
         book_id: str,
         title: str,
         author_name: str,
     ) -> BookEntity:
-        book_repository = BookRepository()
-        author_repository = AuthorRepository()
+        book_gateway = BookGateway(self.book_repository)
+        author_gateway = AuthorGateway(self.author_repository)
         BookUseCases.update_book(
             book_id=book_id,
             title=title,
             author_name=author_name,
-            book_repository=book_repository,
-            author_repository=author_repository,
+            book_gateway=book_gateway,
+            author_gateway=author_gateway,
         )
 
-    @staticmethod
-    def delete_book(book_id: str) -> None:
-        book_repository = BookRepository()
+    def delete_book(self, book_id: str) -> None:
+        book_gateway = BookGateway(self.book_repository)
         BookUseCases.delete_book(
             book_id=book_id,
-            book_repository=book_repository,
+            book_gateway=book_gateway,
         )
