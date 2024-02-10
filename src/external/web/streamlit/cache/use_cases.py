@@ -1,3 +1,4 @@
+import asyncio
 from typing import List
 
 import streamlit as st
@@ -8,7 +9,6 @@ from external.web.streamlit.singletons.book_controller import (
 )
 
 
-@st.cache_resource
-def get_books_list_cache() -> List[BookEntity]:
+async def get_books_list_cache() -> List[BookEntity]:
     book_controller = get_book_controller()
-    return book_controller.get_books()
+    return await book_controller.get_books()

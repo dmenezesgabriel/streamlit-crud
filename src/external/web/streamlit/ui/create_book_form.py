@@ -6,7 +6,7 @@ from external.web.streamlit.singletons.book_controller import (
 )
 
 
-def create_book_form() -> None:
+async def create_book_form() -> None:
     with st.container(border=True):
         st.header("Create Book Form")
         with st.form("create_form", border=False):
@@ -15,11 +15,11 @@ def create_book_form() -> None:
             if st.form_submit_button("Create"):
                 book_controller = get_book_controller()
                 try:
-                    book = book_controller.create_book(
+                    book = await book_controller.create_book(
                         title=title,
                         author_name=author_name,
                     )
-                    get_books_list_cache.clear()
+                    # await get_books_list_cache.clear()
                     st.success(
                         f"Book '{book.title}' by {book.author.name} "
                         "created!"

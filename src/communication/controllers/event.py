@@ -9,11 +9,11 @@ class EventController:
     def __init__(self, event_repository: EventRepository):
         self.event_repository = event_repository
 
-    def get_events(self) -> List[EventEntity]:
+    async def get_events(self) -> List[EventEntity]:
         event_gateway = EventGateway(self.event_repository)
-        return EventUseCase.get_events(event_gateway=event_gateway)
+        return await EventUseCase.get_events(event_gateway=event_gateway)
 
-    def create_event(
+    async def create_event(
         self,
         id: str,
         event_type: str,
@@ -22,7 +22,7 @@ class EventController:
         payload: Dict[str, str],
     ) -> EventEntity:
         event_gateway = EventGateway(self.event_repository)
-        return EventUseCase.create_event(
+        return await EventUseCase.create_event(
             id=id,
             event_type=event_type,
             model_type=model_type,

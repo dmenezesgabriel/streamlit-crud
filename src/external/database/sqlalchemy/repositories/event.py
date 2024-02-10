@@ -1,5 +1,7 @@
 from typing import List
 
+from sqlalchemy.future import select
+
 from common.interfaces.event_repository import EventRepositoryInterface
 from core.domain.entities.event import Event as EventEntity
 from external.database.sqlalchemy.mappers.event import EventMapper
@@ -8,15 +10,16 @@ from external.database.sqlalchemy.session_mixing import use_database_session
 
 
 class EventRepository(EventRepositoryInterface):
-    def create_event(self, event: EventEntity) -> EventEntity:
-        with use_database_session() as db:
-            event_model = EventMapper.entity_to_model(event)
-            db.add(event_model)
-            db.commit()
-            db.refresh(event_model)
-            return EventMapper.model_to_entity(event_model)
+    async def create_event(self, event: EventEntity) -> EventEntity:
+        async with use_database_session() as session:
+            async with session.begin():
+                event_model = EventMapper.entity_to_model(event)
+                session.add(event_model)
+                session.commit()
+                session.refresh(event_model)
+                return EventMapper.model_to_entity(event_model)
 
-    def get_events(self) -> List[EventEntity]:
-        with use_database_session() as db:
-            events = db.query(EventModel).all()
+    async def get_events(self) -> List[EventEntity]:
+        async with use_database_session() as session:
+            events = await session.execute(select(EventModel))
             return [EventMapper.model_to_entity(event) for event in events]

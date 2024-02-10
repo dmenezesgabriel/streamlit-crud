@@ -4,26 +4,26 @@ from core.domain.entities.author import Author as AuthorEntity
 
 class AuthorUseCases:
     @staticmethod
-    def get_author_by_name(
+    async def get_author_by_name(
         name: str,
         author_gateway: AuthorGatewayInterface,
     ) -> AuthorEntity:
-        return author_gateway.get_author_by_name(name)
+        return await author_gateway.get_author_by_name(name)
 
     @staticmethod
-    def create_author(
+    async def create_author(
         name: str,
         author_gateway: AuthorGatewayInterface,
     ) -> AuthorEntity:
         author = AuthorEntity(name=name)
-        return author_gateway.create_author(author)
+        return await author_gateway.create_author(author)
 
     @staticmethod
-    def get_or_create_author(
+    async def get_or_create_author(
         name: str,
         author_gateway: AuthorGatewayInterface,
     ) -> AuthorEntity:
-        existing_author = AuthorUseCases.get_author_by_name(
+        existing_author = await AuthorUseCases.get_author_by_name(
             name=name,
             author_gateway=author_gateway,
         )
@@ -31,7 +31,7 @@ class AuthorUseCases:
         if existing_author:
             author = existing_author
         else:
-            author = AuthorUseCases.create_author(
+            author = await AuthorUseCases.create_author(
                 name=name,
                 author_gateway=author_gateway,
             )

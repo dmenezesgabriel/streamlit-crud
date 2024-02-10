@@ -7,13 +7,13 @@ from core.domain.entities.event import Event as EventEntity
 class EventUseCase:
 
     @staticmethod
-    def get_events(
+    async def get_events(
         event_gateway: EventGatewayInterface,
     ) -> List[EventEntity]:
-        return event_gateway.get_events()
+        return await event_gateway.get_events()
 
     @staticmethod
-    def create_event(
+    async def create_event(
         id: str,
         event_type: str,
         model_type: str,
@@ -28,4 +28,4 @@ class EventUseCase:
             model_id=model_id,
             payload=payload,
         )
-        return event_gateway.create_event(event)
+        return await event_gateway.create_event(event)

@@ -11,9 +11,9 @@ from external.web.streamlit.utils.dataframe import (
 )
 
 
-def list_books() -> None:
+async def list_books() -> None:
     st.header("List of Books")
-    books = get_books_list_cache()
+    books = await get_books_list_cache()
     if books:
         books_data: Dict[str, List[str]] = {
             "ID": [],

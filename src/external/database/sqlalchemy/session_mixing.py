@@ -1,24 +1,24 @@
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from external.database.sqlalchemy.orm import SessionLocal
+from external.database.sqlalchemy.orm import async_session
 
 
 class DatabaseSessionMixin:
     """Database session mixin."""
 
-    def __enter__(self) -> Session:
-        self.db = SessionLocal()
-        return self.db
+    async def __aenter__(self) -> Session:
+        self.session = async_session()
+        return self.session
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
         try:
             if exc_type is not None:
-                self.db.rollback()
+                await self.session.rollback()
         except SQLAlchemyError:
             pass
         finally:
-            self.db.close()
+            await self.session.close()
 
 
 def use_database_session() -> DatabaseSessionMixin:

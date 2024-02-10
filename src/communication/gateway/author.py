@@ -7,8 +7,8 @@ class AuthorGateway(AuthorGatewayInterface):
     def __init__(self, author_repository: AuthorRepositoryInterface):
         self.author_repository = author_repository
 
-    def get_author_by_name(self, name: str) -> AuthorEntity:
-        return self.author_repository.get_author_by_name(name=name)
+    async def get_author_by_name(self, name: str) -> AuthorEntity:
+        return await self.author_repository.get_author_by_name(name=name)
 
-    def create_author(self, author: AuthorEntity) -> AuthorEntity:
-        return self.author_repository.create_author(author=author)
+    async def create_author(self, author: AuthorEntity) -> AuthorEntity:
+        return await self.author_repository.create_author(author=author)

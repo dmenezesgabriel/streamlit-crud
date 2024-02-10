@@ -1,5 +1,7 @@
 from typing import List, Union
 
+from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload
 from sqlalchemy.orm.exc import NoResultFound
 
 from common.interfaces.book_repository import BookRepositoryInterface
@@ -10,42 +12,53 @@ from external.database.sqlalchemy.session_mixing import use_database_session
 
 
 class BookRepository(BookRepositoryInterface):
-    def create_book(self, book: BookEntity) -> BookEntity:
-        with use_database_session() as db:
-            book_model = BookMapper.entity_to_model(book)
-            db.add(book_model)
-            db.commit()
-            db.refresh(book_model)
-            return BookMapper.model_to_entity(book_model)
+    async def create_book(self, book: BookEntity) -> BookEntity:
+        async with use_database_session() as session:
+            async with session.begin():
+                book_model = BookMapper.entity_to_model(book)
+                session.add(book_model)
+            created_book = await session.get(BookModel, book_model.id)
+            created_book.author = await created_book.awaitable_attrs.author
+            return BookMapper.model_to_entity(created_book)
 
-    def get_books(self) -> List[BookEntity]:
-        with use_database_session() as db:
-            books = db.query(BookModel).all()
+    async def get_books(self) -> List[BookEntity]:
+        async with use_database_session() as session:
+            books = await session.scalars(
+                select(BookModel).options(selectinload(BookModel.author))
+            )
             return [BookMapper.model_to_entity(book) for book in books]
 
-    def get_book(self, book_id: int) -> BookEntity:
-        with use_database_session() as db:
-            book = db.query(BookModel).filter_by(id=book_id).first()
+    async def get_book(self, book_id: int) -> BookEntity:
+        async with use_database_session() as session:
+            book = await session.get(BookModel, book_id)
+            book.author = await book.awaitable_attrs.author
             if book:
                 return BookMapper.model_to_entity(book)
             else:
                 raise NoResultFound("Book not found")
 
-    def update_book(self, book: BookEntity) -> Union[BookEntity, None]:
-        with use_database_session() as db:
-            book_model = db.query(BookModel).filter_by(id=book.id).first()
+    async def update_book(self, book: BookEntity) -> Union[BookEntity, None]:
+        async with use_database_session() as session:
+            result = await session.scalars(
+                select(BookModel).filter_by(id=book.id)
+            )
+            book_model = result.first()
             if book_model:
                 book_model.title = book.title
                 book_model.author_id = book.author.id
-                db.commit()
-                db.refresh(book_model)
-                return BookMapper.model_to_entity(book_model)
+                await session.commit()
+                updated_book = await session.get(BookModel, book_model.id)
+                updated_book.author = await updated_book.awaitable_attrs.author
+                return BookMapper.model_to_entity(updated_book)
             else:
                 raise NoResultFound("Book not found")
 
-    def delete_book(self, book_id: int) -> None:
-        with use_database_session() as db:
-            book = db.query(BookModel).filter_by(id=book_id).first()
+    async def delete_book(self, book_id: int) -> None:
+        async with use_database_session() as session:
+            result = await session.scalars(
+                select(BookModel).filter_by(id=book_id)
+            )
+            book = result.first()
             if book:
-                db.delete(book)
-                db.commit()
+                await session.delete(book)
+                await session.commit()

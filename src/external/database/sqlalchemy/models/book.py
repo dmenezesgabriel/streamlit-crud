@@ -24,7 +24,7 @@ class Book(Base):
         ForeignKey("authors.id"),
         nullable=False,
     )
-    author = relationship("Author", back_populates="books")
+    author = relationship("Author", lazy="select")
 
     # Unique constraint on the combination of author and book title
     __table_args__ = (
