@@ -3,9 +3,6 @@ from typing import List
 from common.interfaces.author_repository import AuthorRepository
 from common.interfaces.book_repository import BookRepository
 from core.domain.entities.book import Book as BookEntity
-from core.domain.events.book_created import BookCreatedEvent
-from core.domain.events.book_deleted import BookDeletedEvent
-from core.domain.events.book_updated import BookUpdatedEvent
 from core.use_cases.author import AuthorUseCases
 
 
@@ -33,9 +30,6 @@ class BookUseCases:
 
         new_book = book_repository.create_book(book)
 
-        book_created_event = BookCreatedEvent(
-            book_id=book.id, title=book.title, author=book.author
-        )
         return new_book
 
     @staticmethod
@@ -54,9 +48,6 @@ class BookUseCases:
         book = BookEntity(id=book_id, title=title, author=author)
         new_book = book_repository.update_book(book)
 
-        book_updated = BookUpdatedEvent(
-            book_id=book.id, title=book.title, author=book.author
-        )
         return new_book
 
     @staticmethod
@@ -65,5 +56,3 @@ class BookUseCases:
         book_repository: BookRepository,
     ) -> None:
         book_repository.delete_book(book_id)
-
-        book_deleted_event = BookDeletedEvent(book_id=book_id)
