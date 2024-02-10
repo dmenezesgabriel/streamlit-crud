@@ -1,6 +1,4 @@
-from datetime import datetime
-
-from sqlalchemy import JSON, Column, DateTime, String
+from sqlalchemy import JSON, Column, String
 
 from infrastructure.database.sqlalchemy.orm import Base
 from utils.identifiers import generate_uuid

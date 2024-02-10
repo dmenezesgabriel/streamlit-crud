@@ -1,14 +1,13 @@
 import pandas as pd
 import streamlit as st
 
+from presentation.streamlit.cache.use_cases import get_books_list_cache
 from presentation.streamlit.utils.dataframe import (
-    get_dataframe_rows_added,
-    get_dataframe_rows_cells_updated,
-    get_dataframe_rows_removed,
-)
+    get_dataframe_rows_added, get_dataframe_rows_cells_updated,
+    get_dataframe_rows_removed)
 
 
-def list_books(get_books_list_cache):
+def list_books():
     st.header("List of Books")
     books = get_books_list_cache()
     if books:

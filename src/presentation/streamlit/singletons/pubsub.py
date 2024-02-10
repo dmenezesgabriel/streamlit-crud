@@ -1,6 +1,6 @@
 import streamlit as st
 
-from infrastructure.pubsub.pubsub import EventPublisher
+from infrastructure.pubsub.publisher import EventPublisher
 
 
 @st.cache_resource
