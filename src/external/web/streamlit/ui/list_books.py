@@ -1,17 +1,25 @@
+from typing import Dict, List
+
 import pandas as pd
 import streamlit as st
 
 from external.web.streamlit.cache.use_cases import get_books_list_cache
 from external.web.streamlit.utils.dataframe import (
-    get_dataframe_rows_added, get_dataframe_rows_cells_updated,
-    get_dataframe_rows_removed)
+    get_dataframe_rows_added,
+    get_dataframe_rows_cells_updated,
+    get_dataframe_rows_removed,
+)
 
 
-def list_books():
+def list_books() -> None:
     st.header("List of Books")
     books = get_books_list_cache()
     if books:
-        books_data = {"ID": [], "Title": [], "Author": []}
+        books_data: Dict[str, List[str]] = {
+            "ID": [],
+            "Title": [],
+            "Author": [],
+        }
         for book in books:
             books_data["ID"].append(book.id)
             books_data["Title"].append(book.title)

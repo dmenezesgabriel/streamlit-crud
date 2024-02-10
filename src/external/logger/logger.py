@@ -3,7 +3,7 @@
 import logging
 
 
-def configure_logger():
+def configure_logger() -> logging.Logger:
     logger = logging.getLogger("app")
     logger.setLevel(logging.INFO)
 

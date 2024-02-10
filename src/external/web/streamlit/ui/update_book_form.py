@@ -4,7 +4,7 @@ from communication.controllers.book import BookController
 from external.web.streamlit.cache.use_cases import get_books_list_cache
 
 
-def update_book_form():
+def update_book_form() -> None:
     with st.container(border=True):
         st.header("Update Book")
 

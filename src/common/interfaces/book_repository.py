@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Union
 
 from core.domain.entities.book import Book as BookEntity
 
 
 class BookRepository(ABC):
     @abstractmethod
-    def create_book(self, book: BookEntity):
+    def create_book(self, book: BookEntity) -> BookEntity:
         raise NotImplementedError
 
     @abstractmethod
@@ -18,9 +18,9 @@ class BookRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def update_book(self, book: BookEntity):
+    def update_book(self, book: BookEntity) -> Union[BookEntity | None]:
         raise NotImplementedError
 
     @abstractmethod
-    def delete_book(self, book_id: int):
+    def delete_book(self, book_id: int) -> None:
         raise NotImplementedError

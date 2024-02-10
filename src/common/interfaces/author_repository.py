@@ -9,5 +9,5 @@ class AuthorRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def create_author(self, author) -> AuthorEntity:
+    def create_author(self, author: AuthorEntity) -> AuthorEntity:
         raise NotImplementedError

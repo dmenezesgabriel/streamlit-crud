@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -9,7 +9,7 @@ from external.database.sqlalchemy.session_mixing import use_database_session
 
 
 class BookRepository:
-    def create_book(self, book: BookEntity):
+    def create_book(self, book: BookEntity) -> BookEntity:
         with use_database_session() as db:
             book_model = BookMapper.entity_to_model(book)
             db.add(book_model)
@@ -30,7 +30,7 @@ class BookRepository:
             else:
                 raise NoResultFound("Book not found")
 
-    def update_book(self, book: BookEntity):
+    def update_book(self, book: BookEntity) -> Union[BookEntity, None]:
         with use_database_session() as db:
             book_model = db.query(BookModel).filter_by(id=book.id).first()
             if book_model:
@@ -42,7 +42,7 @@ class BookRepository:
             else:
                 raise NoResultFound("Book not found")
 
-    def delete_book(self, book_id: int):
+    def delete_book(self, book_id: int) -> None:
         with use_database_session() as db:
             book = db.query(BookModel).filter_by(id=book_id).first()
             if book:

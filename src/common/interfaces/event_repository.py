@@ -6,7 +6,7 @@ from core.domain.entities.event import Event as EventEntity
 
 class EventRepository(ABC):
     @abstractmethod
-    def create_event(self, event: EventEntity):
+    def create_event(self, event: EventEntity) -> EventEntity:
         raise NotImplementedError
 
     @abstractmethod

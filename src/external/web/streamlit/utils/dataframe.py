@@ -5,7 +5,7 @@ import pandas as pd
 
 def get_dataframe_rows_added(
     old_df: pd.DataFrame, new_df: pd.DataFrame, index: Any
-):
+) -> pd.DataFrame:
     _old_df = old_df.set_index(index).sort_values(by=index)
     _new_df = new_df.set_index(index).sort_values(by=index)
 
@@ -15,7 +15,7 @@ def get_dataframe_rows_added(
 
 def get_dataframe_rows_removed(
     old_df: pd.DataFrame, new_df: pd.DataFrame, index: Any
-):
+) -> pd.DataFrame:
     _old_df = old_df.set_index(index).sort_values(by=index)
     _new_df = new_df.set_index(index).sort_values(by=index)
 
@@ -25,7 +25,7 @@ def get_dataframe_rows_removed(
 
 def get_dataframe_rows_cells_updated(
     old_df: pd.DataFrame, new_df: pd.DataFrame, index: Any
-):
+) -> pd.DataFrame:
     # removed_rows = get_dataframe_rows_removed(old_df, new_df)
     # added_rows = get_dataframe_rows_added(old_df, new)
 

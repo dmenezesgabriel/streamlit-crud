@@ -4,7 +4,7 @@ from communication.controllers.book import BookController
 from external.web.streamlit.cache.use_cases import get_books_list_cache
 
 
-def create_book_form():
+def create_book_form() -> None:
     with st.container(border=True):
         st.header("Create Book Form")
         with st.form("create_form", border=False):

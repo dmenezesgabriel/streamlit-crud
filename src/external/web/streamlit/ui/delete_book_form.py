@@ -1,14 +1,16 @@
+from typing import List
+
 import streamlit as st
 
 from communication.controllers.book import BookController
 from external.web.streamlit.cache.use_cases import get_books_list_cache
 
 
-def _get_book_options():
+def _get_book_options() -> List[str]:
     return [f"{book.id}: {book.title}" for book in get_books_list_cache()]
 
 
-def delete_book_form():
+def delete_book_form() -> None:
     with st.container(border=True):
         st.header("Delete Book")
 

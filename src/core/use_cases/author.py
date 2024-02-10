@@ -22,7 +22,7 @@ class AuthorUseCases:
     def get_or_create_author(
         name: str,
         author_repository: AuthorRepository,
-    ):
+    ) -> AuthorEntity:
         existing_author = AuthorUseCases.get_author_by_name(
             name=name,
             author_repository=author_repository,

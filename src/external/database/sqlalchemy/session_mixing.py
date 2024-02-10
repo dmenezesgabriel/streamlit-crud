@@ -21,5 +21,5 @@ class DatabaseSessionMixin:
             self.db.close()
 
 
-def use_database_session():
+def use_database_session() -> DatabaseSessionMixin:
     return DatabaseSessionMixin()

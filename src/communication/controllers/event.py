@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 
 from core.domain.entities.event import Event as EventEntity
 from core.use_cases.event import EventUseCase
@@ -18,7 +18,7 @@ class EventController:
         event_type: str,
         model_type: str,
         model_id: str,
-        payload: dict,
+        payload: Dict[str, str],
     ) -> EventEntity:
         event_repository = EventRepository()
         return EventUseCase.create_event(

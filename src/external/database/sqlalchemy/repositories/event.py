@@ -7,7 +7,7 @@ from external.database.sqlalchemy.session_mixing import use_database_session
 
 
 class EventRepository:
-    def create_event(self, event: EventEntity):
+    def create_event(self, event: EventEntity) -> EventEntity:
         with use_database_session() as db:
             event_model = EventMapper.entity_to_model(event)
             db.add(event_model)
