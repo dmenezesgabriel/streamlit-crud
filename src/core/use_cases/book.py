@@ -2,7 +2,6 @@ from typing import List
 
 from common.interfaces.author_repository import AuthorRepository
 from common.interfaces.book_repository import BookRepository
-from common.interfaces.publisher import BaseEventPublisher
 from core.domain.entities.book import Book as BookEntity
 from core.domain.events.book_created import BookCreatedEvent
 from core.domain.events.book_deleted import BookDeletedEvent
@@ -25,12 +24,10 @@ class BookUseCases:
         author_name: str,
         book_repository: BookRepository,
         author_repository: AuthorRepository,
-        event_publisher: BaseEventPublisher,
     ) -> BookEntity:
         author = AuthorUseCases.get_or_create_author(
             name=author_name,
             author_repository=author_repository,
-            event_publisher=event_publisher,
         )
         book = BookEntity(title=title, author=author)
 
@@ -39,8 +36,6 @@ class BookUseCases:
         book_created_event = BookCreatedEvent(
             book_id=book.id, title=book.title, author=book.author
         )
-        event_publisher.publish_event(book_created_event)
-
         return new_book
 
     @staticmethod
@@ -50,12 +45,10 @@ class BookUseCases:
         author_name: str,
         book_repository: BookRepository,
         author_repository: AuthorRepository,
-        event_publisher: BaseEventPublisher,
     ) -> BookEntity:
         author = AuthorUseCases.get_or_create_author(
             name=author_name,
             author_repository=author_repository,
-            event_publisher=event_publisher,
         )
 
         book = BookEntity(id=book_id, title=title, author=author)
@@ -64,17 +57,13 @@ class BookUseCases:
         book_updated = BookUpdatedEvent(
             book_id=book.id, title=book.title, author=book.author
         )
-        event_publisher.publish_event(book_updated)
-
         return new_book
 
     @staticmethod
     def delete_book(
         book_id: str,
         book_repository: BookRepository,
-        event_publisher: BaseEventPublisher,
     ) -> None:
         book_repository.delete_book(book_id)
 
         book_deleted_event = BookDeletedEvent(book_id=book_id)
-        event_publisher.publish_event(book_deleted_event)

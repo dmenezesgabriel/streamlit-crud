@@ -2,7 +2,6 @@ import streamlit as st
 
 from communication.controllers.book import BookController
 from external.web.streamlit.cache.use_cases import get_books_list_cache
-from external.web.streamlit.singletons.pubsub import get_event_publisher
 
 
 def _get_book_options():
@@ -27,9 +26,8 @@ def delete_book_form():
             with st.form("delete_book_form", border=False):
                 book_id = book_id_to_delete.split(":")[0].strip()
                 if st.form_submit_button("Delete"):
-                    event_publisher = get_event_publisher()
                     book = BookController.delete_book(
-                        book_id=book_id, event_publisher=event_publisher
+                        book_id=book_id,
                     )
                     get_books_list_cache.clear()
                     if book:

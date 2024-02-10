@@ -1,6 +1,5 @@
 from typing import List
 
-from common.interfaces.publisher import BaseEventPublisher
 from core.domain.entities.book import Book as BookEntity
 from core.use_cases.book import BookUseCases
 from external.database.sqlalchemy.repositories.author import AuthorRepository
@@ -21,9 +20,7 @@ class BookController:
         )
 
     @staticmethod
-    def create_book(
-        title: str, author_name: str, event_publisher: BaseEventPublisher
-    ) -> BookEntity:
+    def create_book(title: str, author_name: str) -> BookEntity:
         book_repository = BookRepository()
         author_repository = AuthorRepository()
         return BookUseCases.create_book(
@@ -31,7 +28,6 @@ class BookController:
             author_name=author_name,
             book_repository=book_repository,
             author_repository=author_repository,
-            event_publisher=event_publisher,
         )
 
     @staticmethod
@@ -39,7 +35,6 @@ class BookController:
         book_id: str,
         title: str,
         author_name: str,
-        event_publisher: BaseEventPublisher,
     ) -> BookEntity:
         book_repository = BookRepository()
         author_repository = AuthorRepository()
@@ -49,14 +44,12 @@ class BookController:
             author_name=author_name,
             book_repository=book_repository,
             author_repository=author_repository,
-            event_publisher=event_publisher,
         )
 
     @staticmethod
-    def delete_book(book_id: str, event_publisher: BaseEventPublisher) -> None:
+    def delete_book(book_id: str) -> None:
         book_repository = BookRepository()
         BookUseCases.delete_book(
             book_id=book_id,
             book_repository=book_repository,
-            event_publisher=event_publisher,
         )

@@ -1,5 +1,4 @@
 from common.interfaces.author_repository import AuthorRepository
-from common.interfaces.publisher import BaseEventPublisher
 from core.domain.entities.author import Author as AuthorEntity
 
 
@@ -15,7 +14,6 @@ class AuthorUseCases:
     def create_author(
         name: str,
         author_repository: AuthorRepository,
-        event_publisher: BaseEventPublisher,
     ) -> AuthorEntity:
         author = AuthorEntity(name=name)
         return author_repository.create_author(author)
@@ -24,7 +22,6 @@ class AuthorUseCases:
     def get_or_create_author(
         name: str,
         author_repository: AuthorRepository,
-        event_publisher: BaseEventPublisher,
     ):
         existing_author = AuthorUseCases.get_author_by_name(
             name=name,
@@ -37,6 +34,5 @@ class AuthorUseCases:
             author = AuthorUseCases.create_author(
                 name=name,
                 author_repository=author_repository,
-                event_publisher=event_publisher,
             )
         return author

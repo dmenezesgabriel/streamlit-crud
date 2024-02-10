@@ -2,7 +2,6 @@ import streamlit as st
 
 from communication.controllers.book import BookController
 from external.web.streamlit.cache.use_cases import get_books_list_cache
-from external.web.streamlit.singletons.pubsub import get_event_publisher
 
 
 def update_book_form():
@@ -27,12 +26,10 @@ def update_book_form():
                     "New Author:", value=selected_book.author.name
                 )
                 if st.form_submit_button("Update"):
-                    event_publisher = get_event_publisher()
                     book = BookController.update_book(
                         book_id=book_id,
                         title=title,
                         author_name=author_name,
-                        event_publisher=event_publisher,
                     )
                     get_books_list_cache.clear()
                     if book:
