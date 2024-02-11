@@ -1,6 +1,5 @@
 # TODO
 
-- [ ] Use DTOs
 - [ ] Register events
 - [ ] Add creation and update dates in utc to models and entities
 - [ ] Tests

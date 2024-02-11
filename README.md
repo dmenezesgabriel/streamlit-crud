@@ -4,6 +4,8 @@
 
 ![clean-architecture](docs/assets/clean_architecture.jpg)
 
+- `DTOs` are used from external layer _if fits_, and passed to `controllers` then use cases in which the `DTOs` data will instance `entities`. those `entities` will be passed to `gateways` and persisted in the `database`.
+
 ## Usage
 
 1. `python -m venv venv`

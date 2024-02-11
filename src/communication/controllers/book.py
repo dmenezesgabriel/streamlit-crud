@@ -1,5 +1,7 @@
 from typing import List
 
+from common.dto.author import BookAuthorDTO
+from common.dto.book import BookDTO, NewBookDTO
 from common.interfaces.author_repository import AuthorRepositoryInterface
 from common.interfaces.book_repository import BookRepositoryInterface
 from communication.gateway.author import AuthorGateway
@@ -30,9 +32,10 @@ class BookController:
     async def create_book(self, title: str, author_name: str) -> BookEntity:
         book_gateway = BookGateway(self.book_repository)
         author_gateway = AuthorGateway(self.author_repository)
+        book_author_dto = BookAuthorDTO(name=author_name)
+        new_book_dto = NewBookDTO(title=title, author=book_author_dto)
         return await BookUseCases.create_book(
-            title=title,
-            author_name=author_name,
+            new_book_data=new_book_dto,
             book_gateway=book_gateway,
             author_gateway=author_gateway,
         )
@@ -45,10 +48,10 @@ class BookController:
     ) -> BookEntity:
         book_gateway = BookGateway(self.book_repository)
         author_gateway = AuthorGateway(self.author_repository)
+        book_author_dto = BookAuthorDTO(name=author_name)
+        book_dto = BookDTO(id=book_id, title=title, author=book_author_dto)
         await BookUseCases.update_book(
-            book_id=book_id,
-            title=title,
-            author_name=author_name,
+            book_data=book_dto,
             book_gateway=book_gateway,
             author_gateway=author_gateway,
         )

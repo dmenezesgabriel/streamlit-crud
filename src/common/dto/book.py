@@ -1,11 +1,7 @@
 import uuid
 from typing import Union
 
-
-class BookAuthorDTO:
-    def __init__(self, id: Union[uuid.UUID, None], name) -> None:
-        self.id = id
-        self.name = name
+from common.dto.author import BookAuthorDTO
 
 
 class NewBookDTO:
