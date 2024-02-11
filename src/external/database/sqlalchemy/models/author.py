@@ -1,19 +1,13 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, DateTime, String
 from sqlalchemy.orm import relationship
 
 from core.utils.identifiers import generate_uuid
-from external.database.sqlalchemy.orm import Base
+from external.database.sqlalchemy.models.base import Base, BaseModel
 
 
-class Author(Base):
+class Author(Base, BaseModel):
     __tablename__ = "authors"
-    id = Column(
-        String,
-        primary_key=True,
-        default=generate_uuid,
-        index=True,
-        nullable=False,
-    )
+
     name = Column(
         String,
         index=True,

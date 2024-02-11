@@ -1,19 +1,10 @@
 import os
 
 from dotenv import load_dotenv
-from sqlalchemy.ext.asyncio import (
-    AsyncAttrs,
-    async_sessionmaker,
-    create_async_engine,
-)
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.pool import QueuePool
 
 load_dotenv()
-
-
-class Base(AsyncAttrs, DeclarativeBase):
-    pass
 
 
 # Create SQLite database engine

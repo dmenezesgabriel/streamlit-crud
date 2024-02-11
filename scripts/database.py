@@ -4,9 +4,10 @@ import sys
 sys.path.append("src")
 
 from external.database.sqlalchemy.models.author import Author
+from external.database.sqlalchemy.models.base import Base
 from external.database.sqlalchemy.models.book import Book
 from external.database.sqlalchemy.models.event import Event
-from external.database.sqlalchemy.orm import Base, engine
+from external.database.sqlalchemy.orm import engine
 
 
 async def main():

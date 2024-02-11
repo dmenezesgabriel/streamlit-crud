@@ -1,19 +1,12 @@
-from sqlalchemy import Column, ForeignKey, String, UniqueConstraint
+from sqlalchemy import Column, DateTime, ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from core.utils.identifiers import generate_uuid
-from external.database.sqlalchemy.orm import Base
+from external.database.sqlalchemy.models.base import Base, BaseModel
 
 
-class Book(Base):
+class Book(Base, BaseModel):
     __tablename__ = "books"
-    id = Column(
-        String,
-        primary_key=True,
-        default=generate_uuid,
-        index=True,
-        nullable=False,
-    )
     title = Column(
         String,
         index=True,
