@@ -19,7 +19,7 @@ async def create_book_form() -> None:
                         title=title,
                         author_name=author_name,
                     )
-                    # await get_books_list_cache.clear()
+                    await get_books_list_cache.cache.clear()
                     st.success(
                         f"Book '{book.title}' by {book.author.name} "
                         "created!"

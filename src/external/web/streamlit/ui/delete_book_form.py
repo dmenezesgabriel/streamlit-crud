@@ -36,6 +36,6 @@ async def delete_book_form() -> None:
                     book = await book_controller.delete_book(
                         book_id=book_id,
                     )
-                    # await get_books_list_cache.clear()
+                    await get_books_list_cache.cache.clear()
                     if book:
                         st.success(f"Book with ID {book.id} deleted!")

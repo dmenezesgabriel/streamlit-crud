@@ -37,6 +37,6 @@ async def update_book_form() -> None:
                         title=title,
                         author_name=author_name,
                     )
-                    # await get_books_list_cache.clear()
+                    await get_books_list_cache.cache.clear()
                     if book:
                         st.success(f"Book with ID {book.id} updated!")
