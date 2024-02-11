@@ -1,5 +1,9 @@
 # Streamlit CRUD
 
+## Architecture
+
+![clean-architecture](docs/assets/clean_architecture.jpg)
+
 ## Usage
 
 1. `python -m venv venv`
