@@ -16,21 +16,15 @@ async def main() -> None:
 
     st.title("Books CRUD App")
 
-    selected_operation = st.selectbox(
-        "Select Operation",
-        ["Create", "Update", "Delete"],
-        key="crud_operation_select",
-    )
+    tab1, tab2, tab3 = st.tabs(["Create", "Update", "Delete"])
 
-    # Display form based on the selected operation
-    if selected_operation == "Create":
+    with tab1:
         await create_book_form()
-    elif selected_operation == "Update":
+    with tab2:
         await update_book_form()
-    elif selected_operation == "Delete":
+    with tab3:
         await delete_book_form()
 
-    # Display table with all books
     await list_books()
 
 

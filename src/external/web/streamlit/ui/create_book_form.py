@@ -8,7 +8,7 @@ from external.web.streamlit.singletons.book_controller import (
 
 async def create_book_form() -> None:
     with st.container(border=True):
-        st.header("Create Book Form")
+        st.header("Create Book")
         with st.form("create_form", border=False):
             title = st.text_input("Title:")
             author_name = st.text_input("Author:")
