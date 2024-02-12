@@ -1,10 +1,11 @@
-from typing import List
+from typing import List, Union
 
 from common.dto.book import BookDTO, NewBookDTO
 from common.interfaces.author_gateway import AuthorGatewayInterface
 from common.interfaces.book_gateway import BookGatewayInterface
 from common.interfaces.event_gateway import EventGatewayInterface
 from core.domain.entities.book import Book as BookEntity
+from core.domain.exceptions import BookAlreadyExists
 from core.use_cases.author import AuthorUseCases
 from core.use_cases.event import EventUseCase
 
@@ -23,6 +24,14 @@ class BookUseCases:
         return await book_gateway.get_book(book_id)
 
     @staticmethod
+    async def get_book_by_title_and_author_id(
+        title: str, author_id: str, book_gateway: BookGatewayInterface
+    ) -> Union[BookEntity, None]:
+        return await book_gateway.get_book_by_title_and_author_id(
+            title=title, author_id=author_id
+        )
+
+    @staticmethod
     async def create_book(
         new_book_data: NewBookDTO,
         book_gateway: BookGatewayInterface,
@@ -34,6 +43,18 @@ class BookUseCases:
             author_gateway=author_gateway,
             event_gateway=event_gateway,
         )
+
+        existing_book = await BookUseCases.get_book_by_title_and_author_id(
+            title=new_book_data.title,
+            author_id=author.id,
+            book_gateway=book_gateway,
+        )
+
+        if existing_book:
+            raise BookAlreadyExists(
+                "Book with this title and author already exist"
+            )
+
         book = BookEntity(title=new_book_data.title, author=author)
 
         new_book = await book_gateway.create_book(book)

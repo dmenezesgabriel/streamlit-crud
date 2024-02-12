@@ -37,6 +37,18 @@ class BookRepository(BookRepositoryInterface):
             else:
                 raise NoResultFound("Book not found")
 
+    async def get_book_by_title_and_author_id(
+        self, title: str, author_id: str
+    ) -> Union[BookEntity, None]:
+        async with use_database_session() as session:
+            result = await session.scalars(
+                select(BookModel).filter_by(title=title, author_id=author_id)
+            )
+            book_model = result.first()
+            if book_model:
+                book_model.author = await book_model.awaitable_attrs.author
+                return BookMapper.model_to_entity(book_model)
+
     async def update_book(self, book: BookEntity) -> Union[BookEntity, None]:
         async with use_database_session() as session:
             result = await session.scalars(

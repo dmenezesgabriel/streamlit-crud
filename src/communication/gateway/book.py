@@ -18,6 +18,13 @@ class BookGateway(BookGatewayInterface):
     async def get_book(self, book_id: int) -> BookEntity:
         return await self.book_repository.get_book(book_id=book_id)
 
+    async def get_book_by_title_and_author_id(
+        self, title: str, author_id: str
+    ) -> Union[BookEntity, None]:
+        return await self.book_repository.get_book_by_title_and_author_id(
+            title=title, author_id=author_id
+        )
+
     async def update_book(self, book: BookEntity) -> Union[BookEntity, None]:
         return await self.book_repository.update_book(book=book)
 
