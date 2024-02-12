@@ -13,7 +13,8 @@
 3. `pip install -r requirements.txt`
 4. create a `.env` file as the `.env.template` example
 5. `python scripts/database.py`
-6. `streamlit run src/main.py`
+6. `streamlit run src/streamlit.py` or `python src/api.py` to run fastapi
+7. if running fastapi go to `http://localhost:8000/api/v1`
 
 ## Streamlit Alternatives
 
