@@ -11,7 +11,7 @@ from external.web.streamlit.ui.update_book_form import update_book_form
 st.set_page_config(layout="wide")
 
 
-async def main():
+async def main() -> None:
     init_logger()
 
     st.title("Books CRUD App")
