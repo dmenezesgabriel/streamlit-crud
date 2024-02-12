@@ -69,3 +69,37 @@ class BookDTO(BaseModel):
             ]
         }
     }
+
+
+class EditBookDTO(BaseModel):
+    id: str
+    title: str
+    author: BookAuthorDTO
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "id": generate_uuid(),
+                    "title": "The Fellowship of the Ring",
+                    "author": {
+                        "name": "J. R. R. Tolkien",
+                    },
+                },
+                {
+                    "id": generate_uuid(),
+                    "title": "Harry Potter and the Philosopher's Stone",
+                    "author": {
+                        "name": "J. K. Rowling",
+                    },
+                },
+                {
+                    "id": generate_uuid(),
+                    "title": "The Pilgrim's Regress",
+                    "author": {
+                        "name": "C. S. Lewis",
+                    },
+                },
+            ]
+        }
+    }

@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from common.dto.book import BookDTO, NewBookDTO
+from common.dto.book import BookDTO, EditBookDTO, NewBookDTO
 from common.interfaces.author_gateway import AuthorGatewayInterface
 from common.interfaces.book_gateway import BookGatewayInterface
 from common.interfaces.event_gateway import EventGatewayInterface
@@ -70,7 +70,7 @@ class BookUseCases:
 
     @staticmethod
     async def update_book(
-        book_data: BookDTO,
+        book_data: EditBookDTO,
         book_gateway: BookGatewayInterface,
         author_gateway: AuthorGatewayInterface,
         event_gateway: EventGatewayInterface,

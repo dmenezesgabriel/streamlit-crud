@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from fastapi import APIRouter, HTTPException
 
-from common.dto.book import BookDTO, NewBookDTO
+from common.dto.book import BookDTO, EditBookDTO, NewBookDTO
 from communication.controllers.book import BookController
 from external.database.sqlalchemy.repositories.author import AuthorRepository
 from external.database.sqlalchemy.repositories.book import BookRepository
@@ -39,6 +39,13 @@ async def create_book(book: NewBookDTO) -> BookDTO:
         title=book.title, author_name=book.author.name
     )
     return book.to_json()
+
+
+@router.put("/{book_id}", response_model=BookDTO)
+async def update_book(book: EditBookDTO):
+    return await book_controller.update_book(
+        book_id=book.id, title=book.title, author_name=book.author.name
+    )
 
 
 @router.delete("/{book_id}")
