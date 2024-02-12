@@ -1,23 +1,32 @@
-# logger.py
-
 import logging
 
 
-def configure_logger() -> logging.Logger:
-    logger = logging.getLogger("app")
-    logger.setLevel(logging.INFO)
+class SingletonLogger:
+    _instance = None
 
-    # Create a console handler and set the level to INFO
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            logger = logging.getLogger("app")
+            logger.setLevel(logging.INFO)
 
-    # Create a formatter and add it to the handlers
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    )
-    console_handler.setFormatter(formatter)
+            # Create a console handler and set the level to INFO
+            console_handler = logging.StreamHandler()
+            console_handler.setLevel(logging.INFO)
 
-    # Add the handlers to the logger
-    logger.addHandler(console_handler)
-    logger.info("app logger configured")
-    return logger
+            # Create a formatter and add it to the handlers
+            formatter = logging.Formatter(
+                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+            )
+            console_handler.setFormatter(formatter)
+
+            # Add the handlers to the logger
+            logger.addHandler(console_handler)
+            logger.info("app logger configured")
+            cls._instance.logger = logger
+
+        return cls._instance
+
+
+def get_logger():
+    return SingletonLogger().logger

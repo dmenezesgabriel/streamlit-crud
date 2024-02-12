@@ -2,7 +2,7 @@ import asyncio
 import os
 
 import streamlit as st
-from external.web.streamlit.singletons.logger import init_logger
+from external.logger.logger import get_logger
 from external.web.streamlit.ui.create_book_form import create_book_form
 from external.web.streamlit.ui.delete_book_form import delete_book_form
 from external.web.streamlit.ui.list_books import list_books
@@ -12,7 +12,7 @@ st.set_page_config(layout="wide")
 
 
 async def main() -> None:
-    init_logger()
+    get_logger()
 
     st.title("Books CRUD App")
 
