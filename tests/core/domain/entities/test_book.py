@@ -1,3 +1,5 @@
+from uuid import UUID
+
 import pytest
 
 from core.domain.entities.author import Author as AuthorEntity
@@ -16,6 +18,7 @@ def author():
 class TestBookEntity:
     def test_create_book(self, author):
         book = BookEntity(title="The Fellowship of the Ring", author=author)
+        assert UUID(book.id, version=4)
         assert book
 
     @pytest.mark.parametrize("title", ["", None])
