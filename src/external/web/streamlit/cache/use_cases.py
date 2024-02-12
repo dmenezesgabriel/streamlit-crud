@@ -1,9 +1,9 @@
 import asyncio
 from typing import List
 
-import streamlit as st
 from aiocache import Cache, cached
 
+import streamlit as st
 from core.domain.entities.book import Book as BookEntity
 from external.web.streamlit.singletons.book_controller import (
     get_book_controller,

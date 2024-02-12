@@ -16,6 +16,10 @@
 6. `streamlit run src/streamlit.py` or `python src/api.py` to run fastapi
 7. if running fastapi go to `http://localhost:8000/api/v1`
 
+## Development
+
+**IMPORTANT**: _Streamlit_ will watch for file changes and rerun the application, but resources cached with `@st.cache_resource` will not be updated by the reruns triggered by the file watchdog
+
 ## Streamlit Alternatives
 
 - panel
