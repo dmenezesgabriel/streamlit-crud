@@ -12,7 +12,9 @@ st.set_page_config(layout="wide")
 
 
 async def main() -> None:
-    get_logger()
+    logger = get_logger()
+
+    logger.info("runned main page")
 
     st.title("Books CRUD App")
 

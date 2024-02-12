@@ -22,7 +22,6 @@ class SingletonLogger:
 
             # Add the handlers to the logger
             logger.addHandler(console_handler)
-            logger.info("app logger configured")
             cls._instance.logger = logger
 
         return cls._instance
