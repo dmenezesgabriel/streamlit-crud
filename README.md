@@ -15,6 +15,17 @@
 5. `python scripts/database.py`
 6. `streamlit run src/main.py`
 
+## Streamlit Alternatives
+
+- panel
+- solara
+- nicegui
+- shiny for python
+- reflex
+- plotly dash
+- h2O Wave
+- gradio
+
 ## Resources
 
 - [SQLAlchemy async examples](https://docs.sqlalchemy.org/en/20/_modules/examples/asyncio/async_orm.html)
