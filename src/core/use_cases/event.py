@@ -2,6 +2,7 @@ from typing import Dict, List
 
 from common.interfaces.event_gateway import EventGatewayInterface
 from core.domain.entities.event import Event as EventEntity
+from core.domain.entities.event import EventType
 
 
 class EventUseCase:
@@ -14,7 +15,7 @@ class EventUseCase:
 
     @staticmethod
     async def create_event(
-        event_type: str,
+        event_type: EventType,
         model_type: str,
         model_id: str,
         payload: Dict[str, str],

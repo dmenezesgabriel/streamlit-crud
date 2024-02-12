@@ -1,6 +1,8 @@
 # TODO
 
 - [ ] Tests
+- [ ] Create Event Payload class
+- [ ] Create enum for Event event_type
 - [ ] Add books published date
 - [ ] Add get books by publish date
 - [ ] Add get books by author

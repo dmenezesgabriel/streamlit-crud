@@ -1,6 +1,7 @@
 from common.interfaces.author_gateway import AuthorGatewayInterface
 from common.interfaces.event_gateway import EventGatewayInterface
 from core.domain.entities.author import Author as AuthorEntity
+from core.domain.entities.event import EventType
 from core.use_cases.event import EventUseCase
 
 
@@ -23,7 +24,7 @@ class AuthorUseCases:
         author = await author_gateway.create_author(author)
 
         await EventUseCase.create_event(
-            event_type="created",
+            event_type=EventType.CREATED,
             model_type="authors",
             model_id=author.id,
             payload={"old": {}, "new": author.to_dict()},

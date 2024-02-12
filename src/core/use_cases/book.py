@@ -5,6 +5,7 @@ from common.interfaces.author_gateway import AuthorGatewayInterface
 from common.interfaces.book_gateway import BookGatewayInterface
 from common.interfaces.event_gateway import EventGatewayInterface
 from core.domain.entities.book import Book as BookEntity
+from core.domain.entities.event import EventType
 from core.domain.exceptions import BookAlreadyExists
 from core.use_cases.author import AuthorUseCases
 from core.use_cases.event import EventUseCase
@@ -60,7 +61,7 @@ class BookUseCases:
         new_book = await book_gateway.create_book(book)
 
         await EventUseCase.create_event(
-            event_type="created",
+            event_type=EventType.CREATED,
             model_type="books",
             model_id=new_book.id,
             payload={"old": {}, "new": new_book.to_dict()},
@@ -91,7 +92,7 @@ class BookUseCases:
         new_book = await book_gateway.update_book(book)
 
         await EventUseCase.create_event(
-            event_type="updated",
+            event_type=EventType.UPDATED,
             model_type="books",
             model_id=new_book.id,
             payload={"old": old_book.to_dict(), "new": new_book.to_dict()},
@@ -113,7 +114,7 @@ class BookUseCases:
         await book_gateway.delete_book(book_id)
 
         await EventUseCase.create_event(
-            event_type="deleted",
+            event_type=EventType.DELETED,
             model_type="books",
             model_id=book_id,
             payload={"old": old_book.to_dict(), "new": {}},
