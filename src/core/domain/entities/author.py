@@ -18,5 +18,5 @@ class Author:
         self.id = id if id else generate_uuid()
         self.name = name
 
-    def to_json(self) -> Dict[str, str]:
+    def to_dict(self) -> Dict[str, str]:
         return {"id": self.id, "name": self.name}

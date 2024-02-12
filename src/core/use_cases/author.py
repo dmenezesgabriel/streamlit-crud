@@ -26,7 +26,7 @@ class AuthorUseCases:
             event_type="created",
             model_type="authors",
             model_id=author.id,
-            payload={"old": {}, "new": author.to_json()},
+            payload={"old": {}, "new": author.to_dict()},
             event_gateway=event_gateway,
         )
         return author

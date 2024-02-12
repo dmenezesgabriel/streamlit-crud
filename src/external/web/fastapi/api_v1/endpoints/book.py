@@ -24,13 +24,13 @@ book_controller = BookController(
 
 @router.get("/", response_model=List[BookDTO])
 async def read_books() -> List[BookDTO]:
-    return [book.to_json() for book in await book_controller.get_books()]
+    return [book.to_dict() for book in await book_controller.get_books()]
 
 
 @router.get("/{book_id}", response_model=BookDTO)
 async def read_book(book_id: str) -> BookDTO:
     book = await book_controller.get_book(book_id=book_id)
-    return book.to_json()
+    return book.to_dict()
 
 
 @router.post("/", response_model=BookDTO)
@@ -38,7 +38,7 @@ async def create_book(book: NewBookDTO) -> BookDTO:
     book = await book_controller.create_book(
         title=book.title, author_name=book.author.name
     )
-    return book.to_json()
+    return book.to_dict()
 
 
 @router.put("/{book_id}", response_model=BookDTO)

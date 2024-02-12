@@ -5,10 +5,8 @@ import pandas as pd
 import streamlit as st
 from external.web.streamlit.cache.use_cases import get_books_list_cache
 from external.web.streamlit.utils.dataframe import (
-    get_dataframe_rows_added,
-    get_dataframe_rows_cells_updated,
-    get_dataframe_rows_removed,
-)
+    get_dataframe_rows_added, get_dataframe_rows_cells_updated,
+    get_dataframe_rows_removed)
 
 
 async def list_books() -> None:
@@ -50,8 +48,8 @@ async def list_books() -> None:
 
         with st.expander("Changed Data"):
             st.write("updated: ")
-            st.json(updated_rows.to_json(orient="records"))
+            st.json(updated_rows.to_dict(orient="records"))
             st.write("added: ")
-            st.json(added_rows.to_json(orient="records"))
+            st.json(added_rows.to_dict(orient="records"))
             st.write("removed: ")
-            st.json(deleted_rows.to_json(orient="records"))
+            st.json(deleted_rows.to_dict(orient="records"))

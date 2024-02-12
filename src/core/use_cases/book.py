@@ -63,7 +63,7 @@ class BookUseCases:
             event_type="created",
             model_type="books",
             model_id=new_book.id,
-            payload={"old": {}, "new": new_book.to_json()},
+            payload={"old": {}, "new": new_book.to_dict()},
             event_gateway=event_gateway,
         )
         return new_book
@@ -94,7 +94,7 @@ class BookUseCases:
             event_type="updated",
             model_type="books",
             model_id=new_book.id,
-            payload={"old": old_book.to_json(), "new": new_book.to_json()},
+            payload={"old": old_book.to_dict(), "new": new_book.to_dict()},
             event_gateway=event_gateway,
         )
 
@@ -116,7 +116,7 @@ class BookUseCases:
             event_type="deleted",
             model_type="books",
             model_id=book_id,
-            payload={"old": old_book.to_json(), "new": {}},
+            payload={"old": old_book.to_dict(), "new": {}},
             event_gateway=event_gateway,
         )
 

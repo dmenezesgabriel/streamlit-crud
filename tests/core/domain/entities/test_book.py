@@ -27,3 +27,10 @@ class TestBookEntity:
     def test_create_book_wrong_author_type(self, author):
         with pytest.raises(BookAuthorNotAuthorEntityInstance):
             BookEntity(title="The Fellowship of the Ring", author=author)
+
+    def test_book_to_dict(self, author):
+        book = BookEntity(title="The Fellowship of the Ring", author=author)
+        book_dict_attributes = book.to_dict()
+        assert isinstance(book_dict_attributes, dict)
+        assert book_dict_attributes["title"] == "The Fellowship of the Ring"
+        assert book_dict_attributes["author"]["name"] == "J. R. R. Tolkien"

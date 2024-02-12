@@ -29,9 +29,9 @@ class Book:
         self.title = title
         self.author = author
 
-    def to_json(self) -> Dict[str, str]:
+    def to_dict(self) -> Dict[str, str]:
         return {
             "id": self.id,
             "title": self.title,
-            "author": self.author.to_json(),
+            "author": self.author.to_dict(),
         }
