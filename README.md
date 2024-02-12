@@ -33,4 +33,5 @@
 
 ## Resources
 
+- [Design Patterns - Singleton](https://design-patterns-ebook.readthedocs.io/en/latest/creational/singleton/)
 - [SQLAlchemy async examples](https://docs.sqlalchemy.org/en/20/_modules/examples/asyncio/async_orm.html)
