@@ -33,7 +33,7 @@ async def read_book(book_id: str) -> BookDTO:
     return book.to_json()
 
 
-@router.post("/", response_model=NewBookDTO)
+@router.post("/", response_model=BookDTO)
 async def create_book(book: NewBookDTO) -> BookDTO:
     book = await book_controller.create_book(
         title=book.title, author_name=book.author.name
