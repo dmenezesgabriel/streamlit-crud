@@ -1,4 +1,3 @@
-import uuid
 from typing import Dict, Union
 
 from core.utils.identifiers import generate_uuid
@@ -8,7 +7,7 @@ class Event:
 
     def __init__(
         self,
-        id: Union[uuid.UUID, None] = None,
+        id: Union[str, None] = None,
         *,
         event_type: str,
         model_type: str,

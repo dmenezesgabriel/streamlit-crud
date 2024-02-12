@@ -1,11 +1,10 @@
-import uuid
 from typing import Optional
 
 from pydantic import BaseModel
 
 
 class BookAuthorDTO(BaseModel):
-    id: Optional[uuid.UUID] = None
+    id: Optional[str] = None
     name: str
 
     model_config = {

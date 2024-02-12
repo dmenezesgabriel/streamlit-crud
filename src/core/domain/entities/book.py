@@ -1,5 +1,4 @@
 import json
-import uuid
 from typing import Dict, Union
 
 from core.domain.entities.author import Author as AuthorEntity
@@ -13,7 +12,7 @@ from core.utils.identifiers import generate_uuid
 class Book:
     def __init__(
         self,
-        id: Union[uuid.UUID, None] = None,
+        id: Union[str, None] = None,
         *,
         title: str,
         author: AuthorEntity,
@@ -30,7 +29,7 @@ class Book:
         self.title = title
         self.author = author
 
-    def to_json(self):
+    def to_json(self) -> Dict[str, str]:
         return {
             "id": self.id,
             "title": self.title,

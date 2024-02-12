@@ -28,11 +28,14 @@ class BookRepository(BookRepositoryInterface):
             )
             return [BookMapper.model_to_entity(book) for book in books]
 
-    async def get_book(self, book_id: int) -> BookEntity:
+    async def get_book(self, book_id: str) -> BookEntity:
         async with use_database_session() as session:
-            book = await session.get(BookModel, book_id)
-            book.author = await book.awaitable_attrs.author
+            result = await session.scalars(
+                select(BookModel).filter_by(id=book_id)
+            )
+            book = result.first()
             if book:
+                book.author = await book.awaitable_attrs.author
                 return BookMapper.model_to_entity(book)
             else:
                 raise NoResultFound("Book not found")

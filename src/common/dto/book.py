@@ -1,5 +1,3 @@
-import uuid
-
 from pydantic import BaseModel
 
 from common.dto.author import BookAuthorDTO
@@ -37,7 +35,7 @@ class NewBookDTO(BaseModel):
 
 
 class BookDTO(BaseModel):
-    id: uuid.UUID
+    id: str
     title: str
     author: BookAuthorDTO
 
