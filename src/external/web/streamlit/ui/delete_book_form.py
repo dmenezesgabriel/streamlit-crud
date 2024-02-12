@@ -1,7 +1,6 @@
 from typing import List
 
 import streamlit as st
-
 from external.web.streamlit.cache.use_cases import get_books_list_cache
 from external.web.streamlit.singletons.book_controller import (
     get_book_controller,

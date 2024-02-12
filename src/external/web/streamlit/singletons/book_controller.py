@@ -1,5 +1,4 @@
 import streamlit as st
-
 from communication.controllers.book import BookController
 from external.database.sqlalchemy.repositories.author import AuthorRepository
 from external.database.sqlalchemy.repositories.book import BookRepository

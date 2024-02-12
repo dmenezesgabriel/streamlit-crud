@@ -1,7 +1,6 @@
 import logging
 
 import streamlit as st
-
 from external.logger.logger import configure_logger
 
 
