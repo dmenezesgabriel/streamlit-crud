@@ -14,7 +14,6 @@ class EventUseCase:
 
     @staticmethod
     async def create_event(
-        id: str,
         event_type: str,
         model_type: str,
         model_id: str,
@@ -22,7 +21,6 @@ class EventUseCase:
         event_gateway: EventGatewayInterface,
     ) -> EventEntity:
         event = EventEntity(
-            id=id,
             event_type=event_type,
             model_type=model_type,
             model_id=model_id,

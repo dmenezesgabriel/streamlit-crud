@@ -1,3 +1,4 @@
+import json
 import uuid
 from typing import Dict, Union
 
@@ -17,3 +18,6 @@ class Author:
 
         self.id = id if id else generate_uuid()
         self.name = name
+
+    def to_json(self):
+        return {"id": self.id, "name": self.name}

@@ -3,8 +3,10 @@ from typing import List
 from common.dto.book import BookDTO, NewBookDTO
 from common.interfaces.author_gateway import AuthorGatewayInterface
 from common.interfaces.book_gateway import BookGatewayInterface
+from common.interfaces.event_gateway import EventGatewayInterface
 from core.domain.entities.book import Book as BookEntity
 from core.use_cases.author import AuthorUseCases
+from core.use_cases.event import EventUseCase
 
 
 class BookUseCases:
@@ -25,14 +27,24 @@ class BookUseCases:
         new_book_data: NewBookDTO,
         book_gateway: BookGatewayInterface,
         author_gateway: AuthorGatewayInterface,
+        event_gateway: EventGatewayInterface,
     ) -> BookEntity:
         author = await AuthorUseCases.get_or_create_author(
             name=new_book_data.author.name,
             author_gateway=author_gateway,
+            event_gateway=event_gateway,
         )
         book = BookEntity(title=new_book_data.title, author=author)
 
         new_book = await book_gateway.create_book(book)
+
+        await EventUseCase.create_event(
+            event_type="created",
+            model_type="books",
+            model_id=new_book.id,
+            payload={"old": {}, "new": new_book.to_json()},
+            event_gateway=event_gateway,
+        )
         return new_book
 
     @staticmethod
@@ -40,10 +52,16 @@ class BookUseCases:
         book_data: BookDTO,
         book_gateway: BookGatewayInterface,
         author_gateway: AuthorGatewayInterface,
+        event_gateway: EventGatewayInterface,
     ) -> BookEntity:
         author = await AuthorUseCases.get_or_create_author(
             name=book_data.author.name,
             author_gateway=author_gateway,
+            event_gateway=event_gateway,
+        )
+
+        old_book = await BookUseCases.get_book(
+            book_id=book_data.id, book_gateway=book_gateway
         )
 
         book = BookEntity(
@@ -51,11 +69,34 @@ class BookUseCases:
         )
         new_book = await book_gateway.update_book(book)
 
+        await EventUseCase.create_event(
+            event_type="updated",
+            model_type="books",
+            model_id=new_book.id,
+            payload={"old": old_book.to_json(), "new": new_book.to_json()},
+            event_gateway=event_gateway,
+        )
+
         return new_book
 
     @staticmethod
     async def delete_book(
         book_id: str,
         book_gateway: BookGatewayInterface,
+        event_gateway: EventGatewayInterface,
     ) -> None:
+        old_book = await BookUseCases.get_book(
+            book_id=book_id, book_gateway=book_gateway
+        )
+
         await book_gateway.delete_book(book_id)
+
+        await EventUseCase.create_event(
+            event_type="deleted",
+            model_type="books",
+            model_id=book_id,
+            payload={"old": old_book.to_json(), "new": {}},
+            event_gateway=event_gateway,
+        )
+
+        return None

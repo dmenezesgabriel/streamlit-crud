@@ -15,9 +15,8 @@ class EventRepository(EventRepositoryInterface):
             async with session.begin():
                 event_model = EventMapper.entity_to_model(event)
                 session.add(event_model)
-                session.commit()
-                session.refresh(event_model)
-                return EventMapper.model_to_entity(event_model)
+            created_event = await session.get(EventModel, event_model.id)
+            return EventMapper.model_to_entity(created_event)
 
     async def get_events(self) -> List[EventEntity]:
         async with use_database_session() as session:
