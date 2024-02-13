@@ -1,7 +1,6 @@
 from unittest.mock import MagicMock
 
 import pytest
-
 from src.communication.gateway.event import EventGateway
 from src.core.domain.entities.author import Author as AuthorEntity
 from src.core.domain.entities.event import Event, EventType
@@ -31,7 +30,7 @@ class TestEventUseCase:
                 event_type=EventType.CREATED,
                 model_type="authors",
                 model_id=author.id,
-                payload={},
+                payload={"old": {}, "new": {}},
             )
         ]
 
@@ -44,4 +43,4 @@ class TestEventUseCase:
         assert events[0].event_type == EventType.CREATED
         assert events[0].model_type == "authors"
         assert events[0].model_id == author.id
-        assert events[0].payload == {}
+        assert events[0].payload == {"old": {}, "new": {}}

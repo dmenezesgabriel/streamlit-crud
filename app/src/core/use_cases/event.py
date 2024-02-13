@@ -1,6 +1,7 @@
 from typing import Dict, List, Union
 
 from src.common.interfaces.event_gateway import EventGatewayInterface
+from src.common.types.event import EventPayloadDictType
 from src.core.domain.entities.event import Event as EventEntity
 from src.core.domain.entities.event import EventType
 
@@ -18,7 +19,7 @@ class EventUseCase:
         event_type: EventType,
         model_type: str,
         model_id: str,
-        payload: Union[Dict[str, object], Dict[str, Dict[str, object]]],
+        payload: EventPayloadDictType,
         event_gateway: EventGatewayInterface,
     ) -> EventEntity:
         event = EventEntity(

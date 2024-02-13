@@ -2,6 +2,7 @@ import uuid
 from enum import Enum, unique
 from typing import Dict, Union
 
+from src.common.types.event import EventPayloadDictType
 from src.core.domain.exceptions import InvalidEventType, InvalidModelId
 from src.core.utils.identifiers import generate_uuid
 
@@ -25,7 +26,7 @@ class Event:
         event_type: EventType,
         model_type: str,
         model_id: str,
-        payload: Union[Dict[str, object], Dict[str, Dict[str, object]]],
+        payload: EventPayloadDictType,
     ) -> None:
         if not isinstance(event_type, EventType):
             raise InvalidEventType(

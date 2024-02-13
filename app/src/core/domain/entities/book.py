@@ -1,7 +1,7 @@
 import json
 from typing import Union
 
-from src.common.types.book import bookDictType
+from src.common.types.book import BookDictType
 from src.core.domain.entities.author import Author as AuthorEntity
 from src.core.domain.exceptions import (
     BookAuthorNotAuthorEntityInstance,
@@ -30,7 +30,7 @@ class Book:
         self.title = title
         self.author = author
 
-    def to_dict(self) -> bookDictType:
+    def to_dict(self) -> BookDictType:
         return {
             "id": self.id,
             "title": self.title,

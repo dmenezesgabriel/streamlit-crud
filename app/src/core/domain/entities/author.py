@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Union
 
-from src.common.types.author import authorDictType
+from src.common.types.author import AuthorDictType
 from src.core.domain.exceptions import AuthorNameNotInformed
 from src.core.utils.identifiers import generate_uuid
 
@@ -19,5 +19,5 @@ class Author:
         self.id = id if id else generate_uuid()
         self.name = name
 
-    def to_dict(self) -> authorDictType:
+    def to_dict(self) -> AuthorDictType:
         return {"id": self.id, "name": self.name}

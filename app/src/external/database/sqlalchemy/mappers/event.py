@@ -1,5 +1,6 @@
 from typing import cast
 
+from src.common.types.event import EventPayloadDictType
 from src.core.domain.entities.event import Event as EventEntity
 from src.core.domain.entities.event import EventType
 from src.external.database.sqlalchemy.models.event import Event as EventModel
@@ -13,7 +14,7 @@ class EventMapper:
             event_type=EventType(cast(str, event_model.event_type)),
             model_type=cast(str, event_model.model_type),
             model_id=cast(str, event_model.model_id),
-            payload=event_model.payload,
+            payload=cast(EventPayloadDictType, event_model.payload),
         )
 
     @staticmethod

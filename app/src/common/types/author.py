@@ -1,5 +1,5 @@
 from typing import Dict, TypedDict, Union
 
-authorDictType = TypedDict(
-    "authorDictType", {"id": Union[str, None], "name": str}
+AuthorDictType = TypedDict(
+    "AuthorDictType", {"id": Union[str, None], "name": str}
 )
