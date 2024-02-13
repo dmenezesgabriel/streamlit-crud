@@ -1,6 +1,8 @@
+import uuid
 from enum import Enum, unique
 from typing import Dict, Union
 
+from core.domain.exceptions import InvalidEventType, InvalidModelId
 from core.utils.identifiers import generate_uuid
 
 
@@ -26,8 +28,13 @@ class Event:
         payload: Dict[str, str],
     ) -> None:
         if not isinstance(event_type, EventType):
-            raise ValueError(
+            raise InvalidEventType(
                 f"Invalid event_type: {event_type}. Must be a member of EventType enum."
+            )
+
+        if not self._is_valid_uuid(model_id):
+            raise InvalidModelId(
+                "Invalid model_id. Must be a valid UUID version 4."
             )
 
         self.id = id if id else generate_uuid()
@@ -35,3 +42,12 @@ class Event:
         self.model_type = model_type
         self.model_id = model_id
         self.payload = payload
+
+    def _is_valid_uuid(self, uuid_string):
+        try:
+            uuid_obj = uuid.UUID(uuid_string, version=4)
+            return str(uuid_obj) == uuid_string
+        except AttributeError:
+            return False
+        except ValueError:
+            return False

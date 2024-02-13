@@ -19,3 +19,13 @@ class BookAuthorNotAuthorEntityInstance(Exception):
 class BookAlreadyExists(Exception):
     def __init__(self, message: str):
         super().__init__(message)
+
+
+class InvalidEventType(Exception):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class InvalidModelId(Exception):
+    def __init__(self, message: str):
+        super().__init__(message)
