@@ -1,8 +1,8 @@
 # TODO
 
 - [ ] Tests
-- [ ] Create Event Payload class
-- [ ] Create enum for Event event_type
+- [ ] add load tests with k6 or locust
+- [ ] Create enum for Event model
 - [ ] Add books published date
 - [ ] Add get books by publish date
 - [ ] Add get books by author
