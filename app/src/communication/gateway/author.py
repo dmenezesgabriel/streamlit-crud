@@ -10,13 +10,7 @@ class AuthorGateway(AuthorGatewayInterface):
         self.author_repository = author_repository
 
     async def get_author_by_name(self, name: str) -> Union[AuthorEntity, None]:
-        author: Union[AuthorEntity, None] = (
-            await self.author_repository.get_author_by_name(name=name)
-        )
-        return author
+        return await self.author_repository.get_author_by_name(name=name)
 
     async def create_author(self, author: AuthorEntity) -> AuthorEntity:
-        author: AuthorEntity = await self.author_repository.create_author(
-            author=author
-        )
-        return author
+        return await self.author_repository.create_author(author=author)
