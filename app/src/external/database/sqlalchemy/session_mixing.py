@@ -1,11 +1,12 @@
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.ext.asyncio import AsyncSession
 from src.external.database.sqlalchemy.orm import async_session
 
 
 class DatabaseSessionMixin:
     """Database session mixin."""
 
-    async def __aenter__(self) -> async_session:
+    async def __aenter__(self) -> AsyncSession:
         self.session = async_session()
         return self.session
 
