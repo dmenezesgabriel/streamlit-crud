@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+import uuid
+
+from pydantic import BaseModel, ValidationError, validator
 
 from common.dto.author import BookAuthorDTO
 from core.utils.identifiers import generate_uuid
@@ -39,6 +41,11 @@ class BookDTO(BaseModel):
     title: str
     author: BookAuthorDTO
 
+    @validator("id")
+    def id_must_be_uuid4_compliant(cls, v):
+        uuid.UUID(v, version=4)
+        return v
+
     model_config = {
         "json_schema_extra": {
             "examples": [
@@ -75,6 +82,11 @@ class EditBookDTO(BaseModel):
     id: str
     title: str
     author: BookAuthorDTO
+
+    @validator("id")
+    def id_must_be_uuid4_compliant(cls, v):
+        uuid.UUID(v, version=4)
+        return v
 
     model_config = {
         "json_schema_extra": {
