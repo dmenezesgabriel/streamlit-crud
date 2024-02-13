@@ -11,7 +11,7 @@ from src.external.database.sqlalchemy.models.event import Event
 from src.external.database.sqlalchemy.orm import engine
 
 
-async def main():
+async def main() -> None:
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)

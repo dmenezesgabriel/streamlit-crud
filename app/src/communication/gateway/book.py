@@ -15,7 +15,7 @@ class BookGateway(BookGatewayInterface):
     async def get_books(self) -> List[BookEntity]:
         return await self.book_repository.get_books()
 
-    async def get_book(self, book_id: str) -> BookEntity:
+    async def get_book(self, book_id: str) -> Union[BookEntity, None]:
         return await self.book_repository.get_book(book_id=book_id)
 
     async def get_book_by_title_and_author_id(

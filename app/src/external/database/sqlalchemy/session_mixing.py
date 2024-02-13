@@ -1,5 +1,4 @@
 from sqlalchemy.exc import SQLAlchemyError
-
 from src.external.database.sqlalchemy.orm import async_session
 
 

@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from src.common.interfaces.event_gateway import EventGatewayInterface
 from src.core.domain.entities.event import Event as EventEntity
@@ -18,7 +18,7 @@ class EventUseCase:
         event_type: EventType,
         model_type: str,
         model_id: str,
-        payload: Dict[str, str],
+        payload: Union[Dict[str, object], Dict[str, Dict[str, object]]],
         event_gateway: EventGatewayInterface,
     ) -> EventEntity:
         event = EventEntity(

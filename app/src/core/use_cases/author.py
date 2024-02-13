@@ -1,3 +1,5 @@
+from typing import Union
+
 from src.common.interfaces.author_gateway import AuthorGatewayInterface
 from src.common.interfaces.event_gateway import EventGatewayInterface
 from src.core.domain.entities.author import Author as AuthorEntity
@@ -10,7 +12,7 @@ class AuthorUseCases:
     async def get_author_by_name(
         name: str,
         author_gateway: AuthorGatewayInterface,
-    ) -> AuthorEntity:
+    ) -> Union[AuthorEntity, None]:
         return await author_gateway.get_author_by_name(name)
 
     @staticmethod

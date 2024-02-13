@@ -1,9 +1,12 @@
 import json
-from typing import Dict, Union
+from typing import Union
 
+from src.common.types.book import bookDictType
 from src.core.domain.entities.author import Author as AuthorEntity
-from src.core.domain.exceptions import (BookAuthorNotAuthorEntityInstance,
-                                        BookTitleNotInformed)
+from src.core.domain.exceptions import (
+    BookAuthorNotAuthorEntityInstance,
+    BookTitleNotInformed,
+)
 from src.core.utils.identifiers import generate_uuid
 
 
@@ -27,7 +30,7 @@ class Book:
         self.title = title
         self.author = author
 
-    def to_dict(self) -> Dict[str, str]:
+    def to_dict(self) -> bookDictType:
         return {
             "id": self.id,
             "title": self.title,

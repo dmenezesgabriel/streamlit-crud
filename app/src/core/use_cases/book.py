@@ -21,7 +21,7 @@ class BookUseCases:
     @staticmethod
     async def get_book(
         book_id: str, book_gateway: BookGatewayInterface
-    ) -> BookEntity:
+    ) -> Union[BookEntity, None]:
         return await book_gateway.get_book(book_id)
 
     @staticmethod
@@ -75,7 +75,7 @@ class BookUseCases:
         book_gateway: BookGatewayInterface,
         author_gateway: AuthorGatewayInterface,
         event_gateway: EventGatewayInterface,
-    ) -> BookEntity:
+    ) -> Union[BookEntity, None]:
         author = await AuthorUseCases.get_or_create_author(
             name=book_data.author.name,
             author_gateway=author_gateway,
@@ -89,17 +89,21 @@ class BookUseCases:
         book = BookEntity(
             id=book_data.id, title=book_data.title, author=author
         )
-        new_book = await book_gateway.update_book(book)
+        updated_book = await book_gateway.update_book(book)
+        if old_book and updated_book:
+            await EventUseCase.create_event(
+                event_type=EventType.UPDATED,
+                model_type="books",
+                model_id=updated_book.id,
+                payload={
+                    "old": old_book.to_dict(),
+                    "new": updated_book.to_dict(),
+                },
+                event_gateway=event_gateway,
+            )
 
-        await EventUseCase.create_event(
-            event_type=EventType.UPDATED,
-            model_type="books",
-            model_id=new_book.id,
-            payload={"old": old_book.to_dict(), "new": new_book.to_dict()},
-            event_gateway=event_gateway,
-        )
-
-        return new_book
+            return updated_book
+        return None
 
     @staticmethod
     async def delete_book(
@@ -110,15 +114,15 @@ class BookUseCases:
         old_book = await BookUseCases.get_book(
             book_id=book_id, book_gateway=book_gateway
         )
+        if old_book:
+            await book_gateway.delete_book(book_id)
 
-        await book_gateway.delete_book(book_id)
-
-        await EventUseCase.create_event(
-            event_type=EventType.DELETED,
-            model_type="books",
-            model_id=book_id,
-            payload={"old": old_book.to_dict(), "new": {}},
-            event_gateway=event_gateway,
-        )
+            await EventUseCase.create_event(
+                event_type=EventType.DELETED,
+                model_type="books",
+                model_id=book_id,
+                payload={"old": old_book.to_dict(), "new": {}},
+                event_gateway=event_gateway,
+            )
 
         return None

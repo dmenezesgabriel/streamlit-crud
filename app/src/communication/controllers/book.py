@@ -1,7 +1,7 @@
 from typing import List
 
 from src.common.dto.author import BookAuthorDTO
-from src.common.dto.book import BookDTO, NewBookDTO
+from src.common.dto.book import BookDTO, EditBookDTO, NewBookDTO
 from src.common.interfaces.author_repository import AuthorRepositoryInterface
 from src.common.interfaces.book_repository import BookRepositoryInterface
 from src.common.interfaces.event_repository import EventRepositoryInterface
@@ -59,7 +59,7 @@ class BookController:
         event_gateway = EventGateway(self.event_repository)
 
         book_author_dto = BookAuthorDTO(name=author_name)
-        book_dto = BookDTO(id=book_id, title=title, author=book_author_dto)
+        book_dto = EditBookDTO(id=book_id, title=title, author=book_author_dto)
 
         return await BookUseCases.update_book(
             book_data=book_dto,

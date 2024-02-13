@@ -14,7 +14,7 @@ class BookGatewayInterface(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_book(self, book_id: str) -> BookEntity:
+    async def get_book(self, book_id: str) -> Union[BookEntity, None]:
         raise NotImplementedError
 
     @abstractmethod

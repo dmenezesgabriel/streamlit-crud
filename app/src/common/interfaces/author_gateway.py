@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
+from typing import Union
 
 from src.core.domain.entities.author import Author as AuthorEntity
 
 
 class AuthorGatewayInterface(ABC):
     @abstractmethod
-    async def get_author_by_name(self, name: str) -> AuthorEntity:
+    async def get_author_by_name(self, name: str) -> Union[AuthorEntity, None]:
         raise NotImplementedError
 
     @abstractmethod

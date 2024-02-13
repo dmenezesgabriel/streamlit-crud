@@ -25,7 +25,7 @@ class Event:
         event_type: EventType,
         model_type: str,
         model_id: str,
-        payload: Dict[str, str],
+        payload: Union[Dict[str, object], Dict[str, Dict[str, object]]],
     ) -> None:
         if not isinstance(event_type, EventType):
             raise InvalidEventType(

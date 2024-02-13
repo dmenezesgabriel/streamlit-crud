@@ -1,6 +1,8 @@
+from typing import cast
+
+from src.core.domain.entities.book import Book as BookEntity
 from src.external.database.sqlalchemy.mappers.author import AuthorMapper
 from src.external.database.sqlalchemy.models.book import Book as BookModel
-from src.core.domain.entities.book import Book as BookEntity
 
 
 class BookMapper:
@@ -8,7 +10,9 @@ class BookMapper:
     def model_to_entity(book_model: BookModel) -> BookEntity:
         author_entity = AuthorMapper.model_to_entity(book_model.author)
         return BookEntity(
-            id=book_model.id, title=book_model.title, author=author_entity
+            id=cast(str, book_model.id),
+            title=cast(str, book_model.title),
+            author=author_entity,
         )
 
     @staticmethod

@@ -1,14 +1,19 @@
-from sqlalchemy.future import select
+from typing import Union
 
-from src.external.database.sqlalchemy.mappers.author import AuthorMapper
-from src.external.database.sqlalchemy.models.author import Author as AuthorModel
-from src.external.database.sqlalchemy.session_mixing import use_database_session
+from sqlalchemy.future import select
 from src.common.interfaces.author_repository import AuthorRepositoryInterface
 from src.core.domain.entities.author import Author as AuthorEntity
+from src.external.database.sqlalchemy.mappers.author import AuthorMapper
+from src.external.database.sqlalchemy.models.author import (
+    Author as AuthorModel,
+)
+from src.external.database.sqlalchemy.session_mixing import (
+    use_database_session,
+)
 
 
 class AuthorRepository(AuthorRepositoryInterface):
-    async def get_author_by_name(self, name: str) -> AuthorEntity:
+    async def get_author_by_name(self, name: str) -> Union[AuthorEntity, None]:
         async with use_database_session() as session:
             result = await session.scalars(
                 select(AuthorModel).filter_by(name=name)

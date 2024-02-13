@@ -3,8 +3,8 @@ from typing import Union
 
 
 class SingletonLogger:
-    _instance = None
-    logger = None
+    _instance: Union["SingletonLogger", None] = None
+    logger: Union[logging.Logger, None] = None
 
     def __new__(cls) -> "SingletonLogger":
         if cls._instance is None:
@@ -29,5 +29,8 @@ class SingletonLogger:
         return cls._instance
 
 
-def get_logger() -> Union[logging.Logger, None]:
-    return SingletonLogger().logger
+def get_logger() -> logging.Logger:
+    logger = SingletonLogger().logger
+    if logger is None:
+        raise RuntimeError("Logger instance is not available")
+    return logger
