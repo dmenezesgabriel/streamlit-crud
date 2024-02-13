@@ -11,10 +11,27 @@
 1. `python -m venv venv`
 2. `source venv/Scripts/activate` or `source venv/bin/activate`
 3. `pip install -r requirements.txt`
-4. create a `.env` file as the `.env.template` example
-5. `python scripts/database.py`
-6. `streamlit run src/streamlit.py` or `python src/api.py` to run fastapi
-7. if running fastapi go to `http://localhost:8000/api/v1`
+4. `cd app`
+5. create a `.env` file as the `.env.template` example
+6. `python scripts/database.py`
+7. `streamlit run app/init_streamlit.py` or `python app/init_api.py` to run fastapi
+8. if running fastapi go to `http://localhost:8000/api/v1`
+
+## Tests
+
+1. `python -m venv venv`
+2. `source venv/Scripts/activate` or `source venv/bin/activate`
+3. `pip install -r requirements.txt`
+4. `cd app`
+5. `pytest .`
+
+## Type checking
+
+1. `python -m venv venv`
+2. `source venv/Scripts/activate` or `source venv/bin/activate`
+3. `pip install -r requirements.txt`
+4. `cd app`
+5. `mypy .`
 
 ## Development
 
