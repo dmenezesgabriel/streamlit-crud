@@ -1,6 +1,11 @@
 from typing import Dict
 
 
+class OperationalError(Exception):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
 class AuthorNameNotInformed(Exception):
     def __init__(self, message: str):
         super().__init__(message)
@@ -17,6 +22,11 @@ class BookAuthorNotAuthorEntityInstance(Exception):
 
 
 class BookAlreadyExists(Exception):
+    def __init__(self, message: str):
+        super().__init__(message)
+
+
+class BookNotFound(Exception):
     def __init__(self, message: str):
         super().__init__(message)
 

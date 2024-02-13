@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 
 from src.common.dto.author import BookAuthorDTO
 from src.common.dto.book import BookDTO, EditBookDTO, NewBookDTO
@@ -27,7 +27,7 @@ class BookController:
         book_gateway = BookGateway(self.book_repository)
         return await BookUseCases.get_books(book_gateway=book_gateway)
 
-    async def get_book(self, book_id: str) -> BookEntity:
+    async def get_book(self, book_id: str) -> Union[BookEntity, None]:
         book_gateway = BookGateway(self.book_repository)
         return await BookUseCases.get_book(
             book_id=book_id, book_gateway=book_gateway
@@ -53,7 +53,7 @@ class BookController:
         book_id: str,
         title: str,
         author_name: str,
-    ) -> BookEntity:
+    ) -> Union[BookEntity, None]:
         book_gateway = BookGateway(self.book_repository)
         author_gateway = AuthorGateway(self.author_repository)
         event_gateway = EventGateway(self.event_repository)

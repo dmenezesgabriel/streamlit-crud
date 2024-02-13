@@ -26,6 +26,9 @@ async def update_book_form() -> None:
                 book_id = book_id_to_update.split(":")[0].strip()
                 book_controller = get_book_controller()
                 selected_book = await book_controller.get_book(book_id)
+                if not selected_book:
+                    st.warning("No book found")
+                    return None
                 title = st.text_input("New Title:", value=selected_book.title)
                 author_name = st.text_input(
                     "New Author:", value=selected_book.author.name
