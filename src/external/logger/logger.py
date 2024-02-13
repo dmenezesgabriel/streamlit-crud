@@ -1,10 +1,12 @@
 import logging
+from typing import Union
 
 
 class SingletonLogger:
     _instance = None
+    logger = None
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls) -> "SingletonLogger":
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             logger = logging.getLogger("app")
@@ -27,5 +29,5 @@ class SingletonLogger:
         return cls._instance
 
 
-def get_logger():
+def get_logger() -> Union[logging.Logger, None]:
     return SingletonLogger().logger

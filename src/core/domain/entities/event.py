@@ -12,7 +12,7 @@ class EventType(Enum):
     UPDATED = "updated"
     DELETED = "deleted"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
 
@@ -43,7 +43,7 @@ class Event:
         self.model_id = model_id
         self.payload = payload
 
-    def _is_valid_uuid(self, uuid_string):
+    def _is_valid_uuid(self, uuid_string: str) -> Union[str, bool]:
         try:
             uuid_obj = uuid.UUID(uuid_string, version=4)
             return str(uuid_obj) == uuid_string

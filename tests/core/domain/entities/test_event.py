@@ -9,7 +9,7 @@ from core.domain.exceptions import InvalidEventType, InvalidModelId
 
 
 @pytest.fixture
-def author():
+def author() -> AuthorEntity:
     return AuthorEntity(name="J. R. R. Tolkien")
 
 
@@ -17,7 +17,9 @@ class TestEvent:
     @pytest.mark.parametrize(
         "event_type", [EventType.CREATED, EventType.UPDATED, EventType.DELETED]
     )
-    def test_create_event(self, author, event_type):
+    def test_create_event(
+        self, author: AuthorEntity, event_type: EventType
+    ) -> None:
         event = EventEntity(
             event_type=event_type,
             model_type="authors",
@@ -29,7 +31,9 @@ class TestEvent:
     @pytest.mark.parametrize(
         "event_type", [0, {}, [], True, "created", "updated", "deleted"]
     )
-    def test_create_event_wrong_event_type(self, author, event_type):
+    def test_create_event_wrong_event_type(
+        self, author: AuthorEntity, event_type: EventType
+    ) -> None:
         with pytest.raises(InvalidEventType):
             EventEntity(
                 event_type=event_type,
@@ -41,7 +45,9 @@ class TestEvent:
     @pytest.mark.parametrize(
         "model_id", [0, {}, [], True, "created", "updated", "deleted"]
     )
-    def test_create_event_wrong_model_id_type(self, author, model_id):
+    def test_create_event_wrong_model_id_type(
+        self, author: AuthorEntity, model_id: str
+    ) -> None:
         with pytest.raises(InvalidModelId):
             EventEntity(
                 event_type=EventType.CREATED,

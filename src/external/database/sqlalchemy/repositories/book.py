@@ -51,6 +51,7 @@ class BookRepository(BookRepositoryInterface):
             if book_model:
                 book_model.author = await book_model.awaitable_attrs.author
                 return BookMapper.model_to_entity(book_model)
+            return None
 
     async def update_book(self, book: BookEntity) -> Union[BookEntity, None]:
         async with use_database_session() as session:

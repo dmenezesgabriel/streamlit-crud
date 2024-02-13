@@ -42,7 +42,7 @@ async def create_book(book: NewBookDTO) -> BookDTO:
 
 
 @router.put("/{book_id}", response_model=BookDTO)
-async def update_book(book: EditBookDTO):
+async def update_book(book: EditBookDTO) -> BookDTO:
     return await book_controller.update_book(
         book_id=book.id, title=book.title, author_name=book.author.name
     )

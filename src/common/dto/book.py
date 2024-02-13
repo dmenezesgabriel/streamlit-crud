@@ -1,4 +1,5 @@
 import uuid
+from typing import Union
 
 from pydantic import BaseModel, ValidationError, validator
 
@@ -42,7 +43,7 @@ class BookDTO(BaseModel):
     author: BookAuthorDTO
 
     @validator("id")
-    def id_must_be_uuid4_compliant(cls, v):
+    def id_must_be_uuid4_compliant(cls, v: str) -> Union[str, None]:
         uuid.UUID(v, version=4)
         return v
 
@@ -84,7 +85,7 @@ class EditBookDTO(BaseModel):
     author: BookAuthorDTO
 
     @validator("id")
-    def id_must_be_uuid4_compliant(cls, v):
+    def id_must_be_uuid4_compliant(cls, v: str) -> Union[str, None]:
         uuid.UUID(v, version=4)
         return v
 

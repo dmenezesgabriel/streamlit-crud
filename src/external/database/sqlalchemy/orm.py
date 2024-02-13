@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
@@ -8,7 +9,7 @@ load_dotenv()
 
 
 # Create SQLite database engine
-DATABASE_URI = os.getenv("DATABASE_URI")
+DATABASE_URI = str(os.getenv("DATABASE_URI"))
 engine = create_async_engine(
     DATABASE_URI, pool_size=5, max_overflow=0, poolclass=QueuePool
 )

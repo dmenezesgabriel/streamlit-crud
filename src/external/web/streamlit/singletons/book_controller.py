@@ -1,3 +1,5 @@
+from typing import Union
+
 from communication.controllers.book import BookController
 from external.database.sqlalchemy.repositories.author import AuthorRepository
 from external.database.sqlalchemy.repositories.book import BookRepository
@@ -6,8 +8,9 @@ from external.database.sqlalchemy.repositories.event import EventRepository
 
 class SingletonBookController:
     _instance = None
+    book_controller = None
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls) -> "SingletonBookController":
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             book_repository = BookRepository()
@@ -21,5 +24,5 @@ class SingletonBookController:
         return cls._instance
 
 
-def get_book_controller():
+def get_book_controller() -> Union[BookController, None]:
     return SingletonBookController().book_controller

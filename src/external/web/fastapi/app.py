@@ -24,7 +24,9 @@ app.include_router(api_router, prefix="/api/v1")
 
 
 @app.exception_handler(Exception)
-async def validation_exception_handler(request, err):
+async def validation_exception_handler(
+    request: Request, err: Exception
+) -> JSONResponse:
     base_error_message = f"Failed to execute: {request.method}: {request.url}"
     return JSONResponse(
         status_code=500,
@@ -33,7 +35,9 @@ async def validation_exception_handler(request, err):
 
 
 @app.exception_handler(BookAlreadyExists)
-async def unicorn_exception_handler(request: Request, exc: BookAlreadyExists):
+async def book_already_exists_exception_handler(
+    request: Request, exc: BookAlreadyExists
+) -> JSONResponse:
     return JSONResponse(
         status_code=400,
         content={"message": str(exc)},
@@ -41,9 +45,9 @@ async def unicorn_exception_handler(request: Request, exc: BookAlreadyExists):
 
 
 @app.exception_handler(BookAuthorNotAuthorEntityInstance)
-async def unicorn_exception_handler(
+async def book_author_not_entity_author_entity_instance_exception_handler(
     request: Request, exc: BookAuthorNotAuthorEntityInstance
-):
+) -> JSONResponse:
     return JSONResponse(
         status_code=400,
         content={"message": str(exc)},
@@ -51,9 +55,9 @@ async def unicorn_exception_handler(
 
 
 @app.exception_handler(AuthorNameNotInformed)
-async def unicorn_exception_handler(
+async def author_name_not_informed_exception_handler(
     request: Request, exc: AuthorNameNotInformed
-):
+) -> JSONResponse:
     return JSONResponse(
         status_code=400,
         content={"message": str(exc)},
@@ -61,9 +65,9 @@ async def unicorn_exception_handler(
 
 
 @app.exception_handler(BookTitleNotInformed)
-async def unicorn_exception_handler(
+async def book_title_not_informed_exception_handler(
     request: Request, exc: BookTitleNotInformed
-):
+) -> JSONResponse:
     return JSONResponse(
         status_code=400,
         content={"message": str(exc)},

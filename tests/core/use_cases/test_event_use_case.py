@@ -10,19 +10,19 @@ from core.utils.identifiers import generate_uuid
 
 
 @pytest.fixture
-def author():
+def author() -> AuthorEntity:
     return AuthorEntity(name="J. R. R. Tolkien")
 
 
 class TestEventUseCase:
     @pytest.fixture
-    def event_gateway_mock(self):
+    def event_gateway_mock(self) -> MagicMock:
         return MagicMock(spec=EventGateway)
 
     @pytest.mark.asyncio
     async def test_get_events_call_gateway_event_get_events_once(
-        self, author, event_gateway_mock
-    ):
+        self, author: AuthorEntity, event_gateway_mock: MagicMock
+    ) -> None:
         _id = generate_uuid()
 
         event_gateway_mock.get_events.return_value = [
@@ -35,13 +35,10 @@ class TestEventUseCase:
             )
         ]
 
-        # Call the method under test
         events = await EventUseCase.get_events(event_gateway_mock)
 
-        # Assert the call count
         event_gateway_mock.get_events.assert_called_once()
 
-        # Additional assertions based on the mocked return value
         assert len(events) == 1
         assert events[0].id == _id
         assert events[0].event_type == EventType.CREATED

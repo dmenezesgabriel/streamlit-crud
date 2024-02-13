@@ -20,7 +20,7 @@ class BookGatewayInterface(ABC):
     @abstractmethod
     async def get_book_by_title_and_author_id(
         self, title: str, author_id: str
-    ) -> [BookEntity, None]:
+    ) -> Union[BookEntity, None]:
         raise NotImplementedError
 
     @abstractmethod
