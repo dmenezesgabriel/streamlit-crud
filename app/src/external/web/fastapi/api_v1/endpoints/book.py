@@ -33,6 +33,8 @@ async def read_books() -> List[BookDTO]:
 @router.get("/{book_id}", response_model=BookDTO)
 async def read_book(book_id: str) -> BookDTO:
     book = await book_controller.get_book(book_id=book_id)
+    if not book:
+        raise HTTPException(status_code=404, detail="Book not found")
     return BookDTO(**book.to_dict())
 
 
@@ -49,6 +51,8 @@ async def update_book(book: EditBookDTO) -> BookDTO:
     book = await book_controller.update_book(
         book_id=book.id, title=book.title, author_name=book.author.name
     )
+    if not book:
+        raise HTTPException(status_code=404, detail="Book not found")
     return BookDTO(**book.to_dict())
 
 
