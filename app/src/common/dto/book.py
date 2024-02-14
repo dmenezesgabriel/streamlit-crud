@@ -2,8 +2,8 @@ import uuid
 from typing import Union
 
 from pydantic import BaseModel, ValidationError, validator
-
 from src.common.dto.author import BookAuthorDTO
+from src.common.types.author import AuthorDictType
 from src.core.utils.identifiers import generate_uuid
 
 
@@ -38,9 +38,9 @@ class NewBookDTO(BaseModel):
 
 
 class BookDTO(BaseModel):
-    id: str
+    id: Union[str, None]
     title: str
-    author: BookAuthorDTO
+    author: Union[BookAuthorDTO, AuthorDictType]
 
     @validator("id")
     def id_must_be_uuid4_compliant(cls, v: str) -> Union[str, None]:
