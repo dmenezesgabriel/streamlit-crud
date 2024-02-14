@@ -1,6 +1,7 @@
-from typing import Dict, TypedDict, Union
+from typing import Dict, Union
 
 from src.common.types.author import AuthorDictType
+from typing_extensions import TypedDict
 
 BookDictType = TypedDict(
     "BookDictType",

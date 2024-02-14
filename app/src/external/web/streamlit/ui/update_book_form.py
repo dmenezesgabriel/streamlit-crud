@@ -21,24 +21,26 @@ async def update_book_form() -> None:
         )
 
         # Display form fields if a book is selected
-        if book_id_to_update:
-            with st.form("update_book_form", border=False):
-                book_id = book_id_to_update.split(":")[0].strip()
-                book_controller = get_book_controller()
-                selected_book = await book_controller.get_book(book_id)
-                if not selected_book:
-                    st.warning("No book found")
-                    return None
-                title = st.text_input("New Title:", value=selected_book.title)
-                author_name = st.text_input(
-                    "New Author:", value=selected_book.author.name
+        if not book_id_to_update:
+            return None
+
+        with st.form("update_book_form", border=False):
+            book_id = book_id_to_update.split(":")[0].strip()
+            book_controller = get_book_controller()
+            selected_book = await book_controller.get_book(book_id)
+            if not selected_book:
+                st.warning("No book found")
+                return None
+            title = st.text_input("New Title:", value=selected_book.title)
+            author_name = st.text_input(
+                "New Author:", value=selected_book.author.name
+            )
+            if st.form_submit_button("Update"):
+                book = await book_controller.update_book(
+                    book_id=book_id,
+                    title=title,
+                    author_name=author_name,
                 )
-                if st.form_submit_button("Update"):
-                    book = await book_controller.update_book(
-                        book_id=book_id,
-                        title=title,
-                        author_name=author_name,
-                    )
-                    await get_books_list_cache.cache.clear()
-                    if book:
-                        st.success(f"Book with ID {book.id} updated!")
+                await get_books_list_cache.cache.clear()
+                if book:
+                    st.success(f"Book with ID {book.id} updated!")
