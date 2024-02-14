@@ -9,7 +9,7 @@ from src.external.web.streamlit.singletons.book_controller import (
 )
 
 
-@cached(ttl=None, cache=Cache.MEMORY)
+@cached(ttl=None, cache=Cache.MEMORY)  # type: ignore
 async def get_books_list_cache() -> List[BookEntity]:
     book_controller = get_book_controller()
     return await book_controller.get_books()
