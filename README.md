@@ -33,6 +33,8 @@
 4. `cd app`
 5. `mypy .`
 
+_obs: you may need to use `mypy --install-types`_
+
 ## Development
 
 **IMPORTANT**: _Streamlit_ will watch for file changes and rerun the application, but resources cached with `@st.cache_resource` will not be updated by the reruns triggered by the file watchdog
