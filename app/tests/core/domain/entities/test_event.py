@@ -14,7 +14,7 @@ class TestEvent:
     @pytest.mark.parametrize(
         "event_type", [EventType.CREATED, EventType.UPDATED, EventType.DELETED]
     )
-    def test_create_event(
+    def test_should_create_event(
         self, author_mock: AuthorEntity, event_type: EventType
     ) -> None:
         event = EventEntity(
@@ -28,7 +28,7 @@ class TestEvent:
     @pytest.mark.parametrize(
         "event_type", [0, {}, [], True, "created", "updated", "deleted"]
     )
-    def test_create_event_wrong_event_type(
+    def test_should_not_create_event_wrong_event_type(
         self, author_mock: AuthorEntity, event_type: EventType
     ) -> None:
         with pytest.raises(InvalidEventType):
@@ -42,7 +42,7 @@ class TestEvent:
     @pytest.mark.parametrize(
         "model_id", [0, {}, [], True, "created", "updated", "deleted"]
     )
-    def test_create_event_wrong_model_id_type(
+    def test_should_not_create_event_wrong_model_id_type(
         self, author_mock: AuthorEntity, model_id: str
     ) -> None:
         with pytest.raises(InvalidModelId):

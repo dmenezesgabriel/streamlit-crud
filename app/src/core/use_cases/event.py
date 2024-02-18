@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import List
 
 from src.common.interfaces.event_gateway import EventGatewayInterface
 from src.common.types.event import EventPayloadDictType
