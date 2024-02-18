@@ -9,18 +9,20 @@ from src.core.utils.identifiers import generate_uuid
 
 
 @pytest.fixture
-def author() -> AuthorEntity:
+def author_mock() -> AuthorEntity:
     return AuthorEntity(name="J. R. R. Tolkien")
 
 
+@pytest.fixture
+def event_gateway_mock() -> MagicMock:
+    return MagicMock(spec=EventGateway)
+
+
 class TestEventUseCase:
-    @pytest.fixture
-    def event_gateway_mock(self) -> MagicMock:
-        return MagicMock(spec=EventGateway)
 
     @pytest.mark.asyncio
     async def test_get_events_call_gateway_event_get_events_once(
-        self, author: AuthorEntity, event_gateway_mock: MagicMock
+        self, author_mock: AuthorEntity, event_gateway_mock: MagicMock
     ) -> None:
         _id = generate_uuid()
 
@@ -29,7 +31,7 @@ class TestEventUseCase:
                 id=_id,
                 event_type=EventType.CREATED,
                 model_type="authors",
-                model_id=author.id,
+                model_id=author_mock.id,
                 payload={"old": {}, "new": {}},
             )
         ]
@@ -42,5 +44,5 @@ class TestEventUseCase:
         assert events[0].id == _id
         assert events[0].event_type == EventType.CREATED
         assert events[0].model_type == "authors"
-        assert events[0].model_id == author.id
+        assert events[0].model_id == author_mock.id
         assert events[0].payload == {"old": {}, "new": {}}
