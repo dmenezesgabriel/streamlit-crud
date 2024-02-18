@@ -37,13 +37,11 @@ class TestAuthorUseCaseGetAuthorByName:
     async def test_should_return_author(
         self,
         author_gateway_mock: MagicMock,
-        return_author_future: asyncio.Future,
+        author_mock: AuthorEntity,
         author_name_mock: str,
     ) -> None:
 
-        author_gateway_mock.get_author_by_name.return_value = (
-            return_author_future
-        )
+        author_gateway_mock.get_author_by_name.return_value = author_mock
 
         author = await AuthorUseCases.get_author_by_name(
             name=author_name_mock, author_gateway=author_gateway_mock
@@ -59,11 +57,11 @@ class TestAuthorUseCaseCreateAuthor:
         self,
         author_gateway_mock: MagicMock,
         event_gateway_mock: MagicMock,
-        return_author_future: asyncio.Future,
+        author_mock: AuthorEntity,
         return_event_future: asyncio.Future,
     ) -> None:
 
-        author_gateway_mock.create_author.return_value = return_author_future
+        author_gateway_mock.create_author.return_value = author_mock
         event_gateway_mock.create_event.return_value = return_event_future
 
         name = "J. R. R. Tolkien"
@@ -80,11 +78,11 @@ class TestAuthorUseCaseCreateAuthor:
         self,
         author_gateway_mock: MagicMock,
         event_gateway_mock: MagicMock,
-        return_author_future: asyncio.Future,
+        author_mock: AuthorEntity,
         return_event_future: asyncio.Future,
     ) -> None:
 
-        author_gateway_mock.create_author.return_value = return_author_future
+        author_gateway_mock.create_author.return_value = author_mock
         event_gateway_mock.create_event.return_value = return_event_future
 
         name = "J. R. R. Tolkien"
@@ -107,12 +105,12 @@ class TestAuthorUseCaseCreateAuthor:
         self,
         author_gateway_mock: MagicMock,
         event_gateway_mock: MagicMock,
-        return_author_future: asyncio.Future,
+        author_mock: AuthorEntity,
         return_event_future: asyncio.Future,
     ) -> None:
 
-        author_gateway_mock.create_author.return_value = return_author_future
-        event_gateway_mock.create_event.return_value = return_event_future
+        author_gateway_mock.create_author.return_value = author_mock
+        event_gateway_mock.return_value = return_event_future
 
         name = "J. R. R. Tolkien"
         author = await AuthorUseCases.create_author(

@@ -1,6 +1,6 @@
 from typing import List, Union
 
-from src.common.dto.book import BookDTO, EditBookDTO, NewBookDTO
+from src.common.dto.book import EditBookDTO, NewBookDTO
 from src.common.interfaces.author_gateway import AuthorGatewayInterface
 from src.common.interfaces.book_gateway import BookGatewayInterface
 from src.common.interfaces.event_gateway import EventGatewayInterface
