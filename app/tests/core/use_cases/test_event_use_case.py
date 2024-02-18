@@ -24,7 +24,7 @@ class TestEventUseCaseGetEvents:
         event_gateway_mock.get_events.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_should_gateway_event_get_events_return_events_list(
+    async def test_should_return_events_list(
         self,
         author_mock: AuthorEntity,
         event_gateway_mock: MagicMock,
@@ -66,7 +66,7 @@ class TestEventUseCaseCreateEvent:
         event_gateway_mock.create_event.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_should_gateway_event_create_event_return_event(
+    async def test_should_return_event(
         self,
         event_gateway_mock: MagicMock,
         event_mock: EventEntity,
@@ -114,7 +114,7 @@ class TestEventUseCaseCreateEvent:
             ),
         ],
     )
-    async def test_should_gateway_event_create_event_fail(
+    async def test_create_event_with_wrong_attributes_should_fail(
         self,
         event_gateway_mock: MagicMock,
         event_mock: EventEntity,

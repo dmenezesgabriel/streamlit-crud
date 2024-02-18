@@ -7,26 +7,49 @@ from src.core.domain.entities.event import EventType
 from src.core.use_cases.author import AuthorUseCases
 
 
+@pytest.fixture
+def author_name_mock():
+    return "J. R. R. Tolkien"
+
+
 class TestAuthorUseCaseGetAuthorByName:
     @pytest.mark.asyncio
     async def test_should_call_author_gateway_get_author_once(
         self,
         author_gateway_mock: MagicMock,
         return_author_future: asyncio.Future,
+        author_name_mock: str,
     ) -> None:
 
         author_gateway_mock.get_author_by_name.return_value = (
             return_author_future
         )
 
-        name = "J. R. R. Tolkien"
-        author = await AuthorUseCases.get_author_by_name(
-            name=name, author_gateway=author_gateway_mock
+        await AuthorUseCases.get_author_by_name(
+            name=author_name_mock, author_gateway=author_gateway_mock
+        )
+        author_gateway_mock.get_author_by_name.assert_called_once_with(
+            author_name_mock
         )
 
-        author_gateway_mock.get_author_by_name.assert_called_once_with(name)
+    @pytest.mark.asyncio
+    async def test_should_return_author(
+        self,
+        author_gateway_mock: MagicMock,
+        return_author_future: asyncio.Future,
+        author_name_mock: str,
+    ) -> None:
 
-        assert author.name == name
+        author_gateway_mock.get_author_by_name.return_value = (
+            return_author_future
+        )
+
+        author = await AuthorUseCases.get_author_by_name(
+            name=author_name_mock, author_gateway=author_gateway_mock
+        )
+
+        assert isinstance(author, AuthorEntity)
+        assert author.name == author_name_mock
 
 
 class TestAuthorUseCaseCreateAuthor:
