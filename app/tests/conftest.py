@@ -58,3 +58,10 @@ def return_event_future(event_mock):
     future = asyncio.Future()
     future.set_result(event_mock)
     return future
+
+
+@pytest.fixture
+def return_none_future():
+    future = asyncio.Future()
+    future.set_result(None)
+    return future
