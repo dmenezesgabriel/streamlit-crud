@@ -1,4 +1,3 @@
-import importlib
 import logging.config
 import os
 
@@ -6,30 +5,49 @@ from decouple import config  # type: ignore
 from src.common.utils.singleton import Singleton
 
 
-class ConfigDefault(metaclass=Singleton):
+class Config(metaclass=Singleton):
     DATABASE_URI = config(
-        "DATABASE_URI", default="sqlite+aiosqlite:///./books.db", cast=str
+        "DATABASE_URI",
+        default="sqlite+aiosqlite:///./books.db",
+        cast=str,
     )
     LOG_LEVEL = config("LOG_LEVEL", default="INFO", cast=str)
 
 
-class ConfigDevelopment(ConfigDefault):
+class DevelopmentConfig(Config):
     LOG_LEVEL = config("LOG_LEVEL", default="DEBUG", cast=str)
 
 
-def get_config() -> ConfigDefault:
-    ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
-    app_config: ConfigDefault = getattr(
-        importlib.import_module("src.config"),
-        f"Config{ENVIRONMENT.capitalize()}",
-    )
+class StagingConfig(Config):
+    pass
+
+
+class ProductionConfig(Config):
+    pass
+
+
+def config_factory(environment: str) -> type[Config]:
+    configs = {
+        "development": DevelopmentConfig,
+        "staging": StagingConfig,
+        "production": ProductionConfig,
+    }
+    return configs[environment]
+
+
+def get_config() -> type[Config]:
+    environment = os.getenv("ENVIRONMENT", "development")
+    app_config = config_factory(environment)
+
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
         "formatters": {
             "standard": {
                 "format": (
-                    "%(asctime)s = %(levelname)s -%(name)s - %(message)s"
+                    "[%(asctime)s] %(levelname)s "
+                    "[%(name)s.%(funcName)s:%(lineno)d] "
+                    "%(message)s"
                 ),
                 "datefmt": "%Y-%m-%d %H:%M:%s",
             }
@@ -41,7 +59,7 @@ def get_config() -> ConfigDefault:
             }
         },
         "loggers": {
-            "": {
+            "": {  # root
                 "level": app_config.LOG_LEVEL,
                 "handlers": ["stdout_logger"],
                 "propagate": False,
