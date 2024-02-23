@@ -1,7 +1,7 @@
 import uuid
 from typing import Union
 
-from pydantic import BaseModel, ValidationError, validator
+from pydantic import BaseModel, validator
 from src.common.dto.author import BookAuthorDTO
 from src.common.types.author import AuthorDictType
 from src.core.utils.identifiers import generate_uuid

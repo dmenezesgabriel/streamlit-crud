@@ -1,5 +1,4 @@
 import asyncio
-import os
 
 import streamlit as st
 from src.external.logger.logger import get_logger

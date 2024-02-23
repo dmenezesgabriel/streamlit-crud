@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import List
 
 from fastapi import APIRouter, HTTPException
 from src.common.dto.book import BookDTO, EditBookDTO, NewBookDTO

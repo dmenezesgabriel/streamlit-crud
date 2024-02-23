@@ -1,6 +1,6 @@
 import uuid
 from enum import Enum, unique
-from typing import Dict, Union
+from typing import Union
 
 from src.common.types.event import EventPayloadDictType
 from src.core.domain.exceptions import InvalidEventType, InvalidModelId
@@ -30,7 +30,8 @@ class Event:
     ) -> None:
         if not isinstance(event_type, EventType):
             raise InvalidEventType(
-                f"Invalid event_type: {event_type}. Must be a member of EventType enum."
+                f"Invalid event_type: {event_type}."
+                " Must be a member of EventType enum."
             )
 
         if not self._is_valid_uuid(model_id):

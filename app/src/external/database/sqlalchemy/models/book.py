@@ -1,8 +1,6 @@
-from sqlalchemy import Column, DateTime, ForeignKey, String, UniqueConstraint
+from sqlalchemy import Column, ForeignKey, String, UniqueConstraint
 from sqlalchemy.orm import relationship
-
 from src.external.database.sqlalchemy.models.base import Base, BaseModel
-from src.core.utils.identifiers import generate_uuid
 
 
 class Book(Base, BaseModel):

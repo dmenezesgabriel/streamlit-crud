@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Union
 
 from typing_extensions import TypedDict
 

@@ -1,4 +1,4 @@
-from typing import Any, Optional, Tuple, Type
+from typing import Any, Optional, Type
 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession

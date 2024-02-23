@@ -1,5 +1,4 @@
-import json
-from typing import Dict, Union
+from typing import Union
 
 from src.common.types.author import AuthorDictType
 from src.core.domain.exceptions import AuthorNameNotInformed

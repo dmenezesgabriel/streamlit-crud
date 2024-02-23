@@ -1,4 +1,3 @@
-import json
 from typing import Union
 
 from src.common.types.book import BookDictType

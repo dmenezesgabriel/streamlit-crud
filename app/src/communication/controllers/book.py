@@ -1,7 +1,7 @@
 from typing import List, Union
 
 from src.common.dto.author import BookAuthorDTO
-from src.common.dto.book import BookDTO, EditBookDTO, NewBookDTO
+from src.common.dto.book import EditBookDTO, NewBookDTO
 from src.common.interfaces.author_repository import AuthorRepositoryInterface
 from src.common.interfaces.book_repository import BookRepositoryInterface
 from src.common.interfaces.event_repository import EventRepositoryInterface

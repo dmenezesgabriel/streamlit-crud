@@ -35,6 +35,12 @@
 
 _obs: you may need to use `mypy --install-types`_
 
+## Manually running pre-commit hooks
+
+```sh
+pre-commit run --all-files
+```
+
 ## Development
 
 **IMPORTANT**: _Streamlit_ will watch for file changes and rerun the application, but resources cached with `@st.cache_resource` will not be updated by the reruns triggered by the file watchdog

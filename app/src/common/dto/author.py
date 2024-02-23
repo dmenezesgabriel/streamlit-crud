@@ -1,7 +1,7 @@
 import uuid
 from typing import Union
 
-from pydantic import BaseModel, ValidationError, validator
+from pydantic import BaseModel, validator
 
 
 class BookAuthorDTO(BaseModel):

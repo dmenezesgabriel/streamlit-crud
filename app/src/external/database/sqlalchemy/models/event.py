@@ -1,5 +1,4 @@
-from sqlalchemy import JSON, Column, DateTime, String
-
+from sqlalchemy import JSON, Column, String
 from src.external.database.sqlalchemy.models.base import Base, BaseModel
 
 

@@ -4,11 +4,11 @@ import sys
 
 sys.path.append(os.getcwd())
 
-from src.external.database.sqlalchemy.models.author import Author
-from src.external.database.sqlalchemy.models.base import Base
-from src.external.database.sqlalchemy.models.book import Book
-from src.external.database.sqlalchemy.models.event import Event
-from src.external.database.sqlalchemy.orm import engine
+from src.external.database.sqlalchemy.models.author import Author  # noqa
+from src.external.database.sqlalchemy.models.base import Base  # noqa
+from src.external.database.sqlalchemy.models.book import Book  # noqa
+from src.external.database.sqlalchemy.models.event import Event  # noqa
+from src.external.database.sqlalchemy.orm import engine  # noqa
 
 
 async def main() -> None:
