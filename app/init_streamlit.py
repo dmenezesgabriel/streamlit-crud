@@ -1,18 +1,20 @@
 import asyncio
+import logging
 
 import streamlit as st
-from src.external.logger.logger import get_logger
+from src.config import get_config
 from src.external.web.streamlit.ui.create_book_form import create_book_form
 from src.external.web.streamlit.ui.delete_book_form import delete_book_form
 from src.external.web.streamlit.ui.list_books import list_books
 from src.external.web.streamlit.ui.update_book_form import update_book_form
 
+config = get_config()
+logger = logging.getLogger(__name__)
+
 st.set_page_config(layout="wide")
 
 
 async def main() -> None:
-    logger = get_logger()
-
     logger.info("runned main page")
 
     st.title("Books CRUD App")
