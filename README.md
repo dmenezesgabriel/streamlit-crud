@@ -21,7 +21,7 @@
 
 1. `python -m venv venv`
 2. `source venv/Scripts/activate` or `source venv/bin/activate`
-3. `pip install -r requirements.txt`
+3. `pip install -r requirements-dev.txt`
 4. `cd app`
 5. `pytest .`
 
@@ -29,7 +29,7 @@
 
 1. `python -m venv venv`
 2. `source venv/Scripts/activate` or `source venv/bin/activate`
-3. `pip install -r requirements.txt`
+3. `pip install -r requirements-dev.txt`
 4. `cd app`
 5. `mypy .`
 

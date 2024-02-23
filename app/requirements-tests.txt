@@ -1,6 +1,0 @@
--r requirements.txt
--r requirements-dev.txt
-
-tox==4.12
-pytest==8.0.0
-pytest-asyncio==0.23.5

@@ -16,3 +16,7 @@ types-PyYAML==6.0.12.12
 types-setuptools==69.1.0.20240217
 types-toml==0.10.8.7
 types-ujson==5.9.0.0
+
+tox==4.12
+pytest==8.0.0
+pytest-asyncio==0.23.5
