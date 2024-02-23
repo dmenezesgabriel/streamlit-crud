@@ -35,11 +35,19 @@
 
 _obs: you may need to use `mypy --install-types`_
 
-## Manually running pre-commit hooks
+## pre-commit hooks
 
-```sh
-pre-commit run --all-files
-```
+- **Enable pre-commit hooks**:
+
+  ```sh
+  pre-commit install
+  ```
+
+- **Run manually**:
+
+  ```sh
+  pre-commit run --all-files
+  ```
 
 ## Development
 
