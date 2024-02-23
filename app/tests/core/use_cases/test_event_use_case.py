@@ -1,13 +1,26 @@
 import uuid
-from typing import List
+from typing import Any, List, TypedDict
 from unittest.mock import MagicMock
 
 import pytest
+from src.common.interfaces.event_gateway import EventGatewayInterface
+from src.common.types.event import EventPayloadDictType
 from src.core.domain.entities.author import Author as AuthorEntity
 from src.core.domain.entities.event import Event as EventEntity
 from src.core.domain.entities.event import EventType
 from src.core.domain.exceptions import InvalidEventType, InvalidModelId
 from src.core.use_cases.event import EventUseCase
+
+EventAttributes = TypedDict(
+    "EventAttributes",
+    {
+        "event_type": EventType,
+        "model_type": str,
+        "model_id": str,
+        "payload": EventPayloadDictType,
+        "event_gateway": EventGatewayInterface,
+    },
+)
 
 
 class TestEventUseCaseGetEvents:
@@ -118,8 +131,8 @@ class TestEventUseCaseCreateEvent:
         self,
         event_gateway_mock: MagicMock,
         event_mock: EventEntity,
-        attributes,
-        exceptions,
+        attributes: EventAttributes,
+        exceptions: Any,
     ) -> None:
 
         event_gateway_mock.create_event.return_value = event_mock

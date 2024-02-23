@@ -18,12 +18,12 @@ def author_mock() -> AuthorEntity:
 
 
 @pytest.fixture
-def book_mock(author_mock) -> BookEntity:
+def book_mock(author_mock: MagicMock) -> BookEntity:
     return BookEntity(title="The Fellowship of the Ring", author=author_mock)
 
 
 @pytest.fixture
-def event_mock(author_mock) -> EventEntity:
+def event_mock(author_mock: MagicMock) -> EventEntity:
     return EventEntity(
         event_type=EventType.CREATED,
         model_type="authors",
@@ -33,12 +33,12 @@ def event_mock(author_mock) -> EventEntity:
 
 
 @pytest.fixture
-def book_list_mock(book_mock) -> List[EventEntity]:
+def book_list_mock(book_mock: MagicMock) -> List[EventEntity]:
     return [book_mock]
 
 
 @pytest.fixture
-def event_list_mock(event_mock) -> List[EventEntity]:
+def event_list_mock(event_mock: MagicMock) -> List[EventEntity]:
     return [event_mock]
 
 
@@ -58,21 +58,25 @@ def event_gateway_mock() -> MagicMock:
 
 
 @pytest.fixture
-def return_author_future(author_mock):
-    future = asyncio.Future()
+def return_author_future(
+    author_mock: AuthorEntity,
+) -> asyncio.Future[AuthorEntity]:
+    future: asyncio.Future[AuthorEntity] = asyncio.Future()
     future.set_result(author_mock)
     return future
 
 
 @pytest.fixture
-def return_event_future(event_mock):
-    future = asyncio.Future()
+def return_event_future(
+    event_mock: EventEntity,
+) -> asyncio.Future[EventEntity]:
+    future: asyncio.Future[EventEntity] = asyncio.Future()
     future.set_result(event_mock)
     return future
 
 
 @pytest.fixture
-def return_none_future():
-    future = asyncio.Future()
+def return_none_future() -> asyncio.Future[None]:
+    future: asyncio.Future[None] = asyncio.Future()
     future.set_result(None)
     return future

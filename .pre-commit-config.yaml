@@ -9,6 +9,10 @@ repos:
         name: flake8
         language: system
         entry: bash -c '. venv/bin/activate && cd app && python -m flake8 .'
+      - id: mypy
+        name: mypy
+        language: system
+        entry: bash -c '. venv/bin/activate && cd app && python -m mypy .'
       - id: pytest
         name: pytest
         language: system

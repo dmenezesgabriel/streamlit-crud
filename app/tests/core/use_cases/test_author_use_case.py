@@ -4,12 +4,13 @@ from unittest.mock import MagicMock
 import pytest
 from pytest import MonkeyPatch
 from src.core.domain.entities.author import Author as AuthorEntity
+from src.core.domain.entities.event import Event as EventEntity
 from src.core.domain.entities.event import EventType
 from src.core.use_cases.author import AuthorUseCases
 
 
 @pytest.fixture
-def author_name_mock():
+def author_name_mock() -> str:
     return "J. R. R. Tolkien"
 
 
@@ -18,7 +19,7 @@ class TestAuthorUseCaseGetAuthorByName:
     async def test_should_call_author_gateway_get_author_once(
         self,
         author_gateway_mock: MagicMock,
-        return_author_future: asyncio.Future,
+        return_author_future: asyncio.Future[AuthorEntity],
         author_name_mock: str,
     ) -> None:
 
@@ -58,7 +59,7 @@ class TestAuthorUseCaseCreateAuthor:
         author_gateway_mock: MagicMock,
         event_gateway_mock: MagicMock,
         author_mock: AuthorEntity,
-        return_event_future: asyncio.Future,
+        return_event_future: asyncio.Future[EventEntity],
     ) -> None:
 
         author_gateway_mock.create_author.return_value = author_mock
@@ -79,7 +80,7 @@ class TestAuthorUseCaseCreateAuthor:
         author_gateway_mock: MagicMock,
         event_gateway_mock: MagicMock,
         author_mock: AuthorEntity,
-        return_event_future: asyncio.Future,
+        return_event_future: asyncio.Future[EventEntity],
     ) -> None:
 
         author_gateway_mock.create_author.return_value = author_mock
@@ -106,7 +107,7 @@ class TestAuthorUseCaseCreateAuthor:
         author_gateway_mock: MagicMock,
         event_gateway_mock: MagicMock,
         author_mock: AuthorEntity,
-        return_event_future: asyncio.Future,
+        return_event_future: asyncio.Future[EventEntity],
     ) -> None:
 
         author_gateway_mock.create_author.return_value = author_mock
@@ -129,8 +130,8 @@ class TestAuthorUseCaseGetOrCreateAuthor:
         self,
         author_gateway_mock: MagicMock,
         event_gateway_mock: MagicMock,
-        return_author_future: asyncio.Future,
-        return_none_future: asyncio.Future,
+        return_author_future: asyncio.Future[AuthorEntity],
+        return_none_future: asyncio.Future[None],
         author_name_mock: str,
         monkeypatch: MonkeyPatch,
     ) -> None:
@@ -159,8 +160,8 @@ class TestAuthorUseCaseGetOrCreateAuthor:
         self,
         author_gateway_mock: MagicMock,
         event_gateway_mock: MagicMock,
-        return_author_future: asyncio.Future,
-        return_none_future: asyncio.Future,
+        return_author_future: asyncio.Future[AuthorEntity],
+        return_none_future: asyncio.Future[None],
         author_name_mock: str,
         monkeypatch: MonkeyPatch,
     ) -> None:
