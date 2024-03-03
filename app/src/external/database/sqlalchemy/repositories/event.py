@@ -14,17 +14,21 @@ from src.external.database.sqlalchemy.session_mixing import (
 class EventRepository(EventRepositoryInterface):
     async def create_event(self, event: EventEntity) -> EventEntity:
         async with use_database_session() as session:
-            async with session.begin():
-                event_model = EventMapper.entity_to_model(event)
-                session.add(event_model)
-            created_event = await session.get(EventModel, event_model.id)
+            event_model = EventMapper.entity_to_model(event)
+            session.add(event_model)
+            await session.commit()
+            result = await session.execute(
+                select(EventModel).where(EventModel.id == event_model.id)
+            )
+            created_event = result.scalars().first()
             if not created_event:
                 raise OperationalError("Could not create Event")
             return EventMapper.model_to_entity(created_event)
 
     async def get_events(self) -> List[EventEntity]:
         async with use_database_session() as session:
-            events = await session.execute(select(EventModel))
+            result = await session.execute(select(EventModel))
+            events = result.scalars().all()
             return [
                 EventMapper.model_to_entity(cast(EventModel, event))
                 for event in events
