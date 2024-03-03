@@ -49,7 +49,7 @@ def get_config() -> type[Config]:
                     "[%(name)s.%(funcName)s:%(lineno)d] "
                     "%(message)s"
                 ),
-                "datefmt": "%Y-%m-%d %H:%M:%s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
             }
         },
         "handlers": {
