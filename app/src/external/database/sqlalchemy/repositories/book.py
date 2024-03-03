@@ -1,6 +1,6 @@
-from typing import List, Union, cast
+from typing import List, Union
 
-from sqlalchemy import Column, update
+from sqlalchemy import update
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from src.common.interfaces.book_repository import BookRepositoryInterface
