@@ -1,6 +1,6 @@
 from typing import List, Union, cast
 
-from sqlalchemy import Column
+from sqlalchemy import Column, update
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 from src.common.interfaces.book_repository import BookRepositoryInterface
@@ -70,8 +70,11 @@ class BookRepository(BookRepositoryInterface):
             )
             book_model = result.scalars().first()
             if book_model:
-                book_model.title = cast(Column[str], book.title)
-                book_model.author_id = cast(Column[str], book.author.id)
+                await session.execute(
+                    update(BookModel)
+                    .where(BookModel.id == book.id)
+                    .values(title=book.title, author_id=book.author.id)
+                )
                 await session.commit()
 
                 updated_book_query = await session.execute(
