@@ -23,7 +23,7 @@
 2. `source venv/Scripts/activate` or `source venv/bin/activate`
 3. `pip install -r requirements-dev.txt`
 4. `cd app`
-5. `pytest .`
+5. `pytest --cov --cov-report=html:coverage_report tests/`
 
 ## Type checking
 
