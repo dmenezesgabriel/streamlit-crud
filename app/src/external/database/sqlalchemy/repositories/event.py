@@ -1,4 +1,4 @@
-from typing import List, cast
+from typing import List
 
 from sqlalchemy.future import select
 from src.common.interfaces.event_repository import EventRepositoryInterface
@@ -29,7 +29,4 @@ class EventRepository(EventRepositoryInterface):
         async with use_database_session() as session:
             result = await session.execute(select(EventModel))
             events = result.scalars().all()
-            return [
-                EventMapper.model_to_entity(cast(EventModel, event))
-                for event in events
-            ]
+            return [EventMapper.model_to_entity(event) for event in events]

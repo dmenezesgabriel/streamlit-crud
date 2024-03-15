@@ -1,10 +1,10 @@
-from locust import HttpUser, between, task
+from locust import HttpUser, between, task  # type: ignore
 
 
-class AppUser(HttpUser):
+class AppUser(HttpUser):  # type: ignore
     wait_time = between(2, 5)
 
     # Endpoint
-    @task
-    def home_page(self):
+    @task  # type: ignore
+    def home_page(self) -> None:
         self.client.get("/")
