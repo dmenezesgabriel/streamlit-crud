@@ -45,8 +45,8 @@ def get_config() -> type[Config]:
         "formatters": {
             "standard": {
                 "format": (
-                    "[%(asctime)s] %(levelname)s "
-                    "[%(name)s.%(funcName)s:%(lineno)d] "
+                    "%(asctime)s [%(levelname)s] %(pathname)s "
+                    "%(funcName)s:%(lineno)d "
                     "%(message)s"
                 ),
                 "datefmt": "%Y-%m-%d %H:%M:%S",
@@ -59,7 +59,7 @@ def get_config() -> type[Config]:
             }
         },
         "loggers": {
-            "": {  # root
+            "app": {
                 "level": app_config.LOG_LEVEL,
                 "handlers": ["stdout_logger"],
                 "propagate": False,
