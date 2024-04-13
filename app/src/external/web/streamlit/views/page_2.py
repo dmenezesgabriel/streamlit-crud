@@ -1,5 +1,9 @@
 import streamlit as st
+from src.external.web.streamlit.components.side_nav import side_nav
 
 
 async def render() -> None:
-    st.header("Page 2")
+    with st.sidebar:
+        side_nav()
+
+    st.header("Under construction")

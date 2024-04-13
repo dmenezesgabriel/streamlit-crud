@@ -3,6 +3,9 @@ runOnSave = true
 maxUploadSize = 200
 enableStaticServing = false
 
+[client]
+showSidebarNavigation = false
+
 [browser]
 gatherUsageStats = false
 
